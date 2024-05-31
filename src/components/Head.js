@@ -300,7 +300,7 @@ const Head = () => {
           {publicites.map((pub) => (
             <div key={pub.id}>
               <Link  to={pub.lien} target="_blank" rel="noopener noreferrer">
-                <img src={`http://localhost:8080/${pub.sary}`} alt={pub.sary} style={style}/>
+                <img src={`https://hipocampbackend-5.onrender.com/${pub.sary}`} alt={pub.sary} style={style}/>
  
                 </Link>
                
@@ -312,7 +312,7 @@ const Head = () => {
         publicites.map((pub) => (
           <div key={pub.id}>
             <Link  to={pub.lien} target="_blank" rel="noopener noreferrer">
-            <img src={`http://localhost:8080/${pub.sary}`} alt={pub.sary} style={style}/>
+            <img src={`https://hipocampbackend-5.onrender.com/${pub.sary}`} alt={pub.sary} style={style}/>
 
 
             </Link>
