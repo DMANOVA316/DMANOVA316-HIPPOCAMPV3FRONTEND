@@ -17,6 +17,7 @@ import CoursApprenant from '@/apprenants/pages/CoursApprenant';
 import ApprenantCours from '@/apprenants/pages/ApprenantCours';
 import RechercheCours from '@/apprenants/pages/RechercheCours';
 import ListCoursApprenant from '@/apprenants/pages/ListCoursApprenant';
+import ListeMessageApp from '@/apprenants/pages/ListeMessageApp';
 import ListCoursApprenantDeux from '@/apprenants/pages/ListCoursApprenantDeux';
 import ListeFormationAcceuil from '@/apprenants/pages/ListeFormationAcceuil';
 import DetailFormationAccueil from '@/apprenants/pages/DetailFormationAccueil';
@@ -64,6 +65,8 @@ import Categorie from '@/admins/pages/Categorie';
 import ValidFormation from '@/admins/pages/ValidFormation';
 import ListFormateur from '@/admins/pages/ListFormateur';
 import AjoutPublicite from '@/admins/pages/AjoutPublicite';
+import TableauBordPub from '@/admins/pages/TableauBordPub';
+import GrapheParMois from '@/admins/pages/GrapheParMois';
 
 import AddCategorie from '@/admins/pages/AddCategorie';
 import DeleteCategorie from '@/admins/pages/DeleteCategorie';
@@ -113,9 +116,10 @@ import Examens from '@/formateurs/pages/Examens';
 import CertificatPdf from '@/formateurs/pages/CertificatPdf';
 import ConfigEspace from '@/formateurs/pages/ConfigEspace';
 import ConfigPage from '@/formateurs/pages/ConfigPage';
-import SiteFormateur from '@/formateurs/pages/SiteFormateur';
+import MonSite from '@/formateurs/pages/MonSite';
 
 import Dashboardapprenant from '@/apprenants/pages/Dashboardapprenant';
+
 
 
 import Userprofil from '@/exemple/Userprofil';
@@ -131,6 +135,7 @@ import MesApprenantInscit from '@/formateurs/pages/MesApprenantInscit';
 import ResultatExamen from '@/formateurs/pages/ResultatExamen';
 import Resultat from '@/formateurs/pages/Resultat';
 import GrapheTauxReussite from '@/formateurs/pages/GrapheTauxReussite';
+import GrapheDroitFormation from '@/formateurs/pages/GrapheDroitFormation';
 import ClassementFormation from '@/formateurs/pages/ClassementFormation';
 import ListeMessageFormateur from '@/formateurs/pages/ListeMessageFormateur';
 
@@ -210,6 +215,8 @@ function App() {
                     <Route path="detailformateur" element={<DetailFormateur/>}/>     
                     <Route path="listformation" element={<ListFormation/>}/>
                     <Route path="ajoutpublicite" element={<AjoutPublicite/>}/>
+                    <Route path="TableauBordPub" element={<TableauBordPub/>}/>
+                    <Route path="GrapheParMois" element={<GrapheParMois/>}/>
                     <Route path="menu" element={<Menu/>}/>
                     <Route path="modifCategorie" element={<ModifCategorie/>}/>
                     <Route path="deleteCategorie" element={<DeleteCategorie/>}/>
@@ -237,6 +244,7 @@ function App() {
                     <Route path="ResultatExamen" element={<ResultatExamen />}/>
                     <Route path="Resultat" element={<Resultat />}/>
                     <Route path="GrapheTauxReussite" element={<GrapheTauxReussite />}/>
+                    <Route path="GrapheDroitFormation" element={<GrapheDroitFormation />}/>
                     <Route path="ClassementFormation" element={<ClassementFormation />}/>
                     <Route path="ListeMessageFormateur" element={<ListeMessageFormateur />}/>
                     <Route path="newformation" element={<NewFormation />}/>
@@ -271,16 +279,18 @@ function App() {
         {/* Utilisez Route pour définir la route qui inclut le titre de la formation */}
                    <Route path="/mescoursapprenant" element={<MesCoursApprenant/>}/>
 
+
         <Route path="/mescoursapprenantDeux" element={<MesCoursApprenantDeux/>}/>
 
         <Route path="/listcoursapprenant" element={<ListCoursApprenant />} />
+        <Route path="/ListeMessageApp" element={<ListeMessageApp />} />
         <Route path="/listcoursapprenantDeux" element={<ListCoursApprenantDeux />} />
         <Route path="/reponsecommentaireform" element={<ReponseCommentaireForm />} />
         <Route path="/ApprenantCours" element={<ApprenantCours/>}/>
         <Route path="/listeFormationacceuil" element={<ListeFormationAcceuil />} />
         <Route path="/detailFormationaccueil" element={<DetailFormationAccueil />} />
         <Route path="/detailFormationaccueilDeux" element={<DetailFormationAccueilDeux />} />
-        <Route path="/SiteFormateur" element={<SiteFormateur />} />
+        <Route path="/MonSite" element={<MonSite />} />
        
       
                 {<Route path="/MessageApprenant" element={<MessageApprenant/>}/> }
@@ -302,6 +312,7 @@ function App() {
                     <Route path="detailquizapprenant" element={<DetailQuizApprenant/>}/> 
                 <Route path="ApprenantAdmis" element={<ApprenantAdmis/>}/> 
                     <Route path="detailExamenApprenant" element={<DetailExamenApprenant/>}/> 
+
         
                 </Route>
 

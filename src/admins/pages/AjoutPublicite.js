@@ -73,8 +73,6 @@ const [userDetailsResponse, setUserDetailsResponse] = useState(null);
       formData.append('contact', contact);
       formData.append('titre', titre);
       formData.append('lien', lien);
-      formData.append('montantParJours', montantParJours);
-      formData.append('duree', duree);
       formData.append('image', image);
       formData.append('resumer', resumer);
       formData.append('datedebut', datedebut);
@@ -180,18 +178,7 @@ const [userDetailsResponse, setUserDetailsResponse] = useState(null);
                                
                            </div>
                          </div>
-                          
-                         <div>
-                           <div className="mb-2 block">
-                               <Label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="base" 
-                                      value="Durée en jour"/>
-                           </div>
-                           <div className="flex space-x-4 items-center">
-                               <TextInput id="unite" type="text" placeholder="Veuillez remplir..." required value={duree} 
-                               onChange={(e) => setDuree(e.target.value)}/>
-                               
-                           </div>
-                         </div>
+                           
                           
                          <div>
                            <div className="mb-2 block">
@@ -203,19 +190,7 @@ const [userDetailsResponse, setUserDetailsResponse] = useState(null);
                                onChange={(e) => setDateFin(e.target.value)}/>
                                
                            </div>
-                         </div>
-                         <div>
-                           <div className="mb-2 block">
-                               <Label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="montant" 
-                                      value="Montant par jours"/>
-                           </div>
-                           <div className="flex space-x-4 items-center">
-                               <TextInput id="unite" type="number" placeholder="Veuillez remplir..." required value={montantParJours} 
-                               onChange={(e) => setMontantParJours(e.target.value)}/>
-                               
-                           </div>
-                         </div>
-             
+                         </div> 
                         
                        <div>
                              <Label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" 

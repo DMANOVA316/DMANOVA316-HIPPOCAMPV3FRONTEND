@@ -211,11 +211,7 @@ const Profilformateur = () => {
 <br></br>
     
 
-
-<form className="box font-medium w-full md:w-1/3 ml-auto flex justify-center">
-<Link to={`/MessageFormateur?idFormateur=${demandes.idFormateur}&idApprenant=${apprenant.idApprenant}&tokenform=${tokenform}`} style={{backgroundColor:'#0096BB',color:'white'}} type="submit" className="px-8 py-2 bg-blue-300 text-blue-700 rounded-md text-sm" >Message</Link>
-        
-    </form>
+ 
 <div className="bg-white border border-gray-300 shadow-lg rounded-lg transition duration-300 " style={{marginLeft:'-5%'}}>
             
             <div className="p-4">

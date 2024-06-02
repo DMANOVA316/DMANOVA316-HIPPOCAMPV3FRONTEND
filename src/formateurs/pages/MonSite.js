@@ -200,7 +200,8 @@ const ListeFormationAcceuil = () => {
         ))}
       </div>
     </div>
-
+    <br></br>
+    <p style={{marginLeft:'45%'}}>Propulsé par Hippocamp</p>
     </>
   );
 

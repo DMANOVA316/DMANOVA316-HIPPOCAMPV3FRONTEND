@@ -50,10 +50,10 @@ useEffect(() => {
       console.log("Données des examens récupérées avec succès :", response.data);
       
       const newData = {
-        labels: ['Pourcentage Admis', 'Pourcentage Non Admis'],
+        labels: ['% Admis', '% Non Admis'],
         datasets: [
           {
-            data: [response.data[0].pourcentageAdmis, response.data[0].pourcentageNonAdmis],
+            data: [response.data[0].pourcentageAdmis , response.data[0].pourcentageNonAdmis],
             backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 99, 132, 0.6)'],
             borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
             borderWidth: 1,
@@ -99,11 +99,6 @@ useEffect(() => {
 <>
 <Navform/>
 <BarNav/>
-<div style={{ width: '600px', height: '600px' }}>
-      {chartData && chartData.datasets.length > 0 && (
-        <Pie data={chartData} />
-      )}
-    </div>
 
     <div className="flex items-center justify-center space-x-4 mt-16">                                    
   
@@ -113,14 +108,19 @@ useEffect(() => {
 
     <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-2">
         <div className="mx-auto max-w-screen-xl px-4 lg:px-2">
-        <div className="flex items-center justify-start h-full mb-6">
-      <div className="bg-white rounded-lg shadow-lg p-6 flex items-center space-x-4">
+        <div  className="flex items-center justify-start h-full mb-6">
+      <div  className="bg-white rounded-lg shadow-lg p-6 flex items-center space-x-4">
         {nomFormation.map(demande => (
         <div>
-          <p className="text-gray-600 font-bold">Liste des admis sur la formation {demande.titre}</p>
+          <p className="text-gray-600 font-bold">Liste des admis sur la formation " {demande.titre} "</p>
           
           {pourcentage.map(pourcentages => (
-          <p className="text-gray-600 font-bold"> {pourcentages.pourcentageAdmis} %</p>
+            <ul className="">
+                                <li className="px-4 py-3">Total inscrit : {pourcentages.totalinscrits}</li>
+                                <li className="px-4 py-3">Nombre admis : {pourcentages.admis}  ({pourcentages.pourcentageAdmis}%)</li>
+                                <li className="px-4 py-3">Nombre Non admis : {pourcentages.nonadmis}  ({pourcentages.pourcentageNonAdmis}%)</li>
+     
+                        </ul>
         ))}  
         
         </div>
@@ -129,9 +129,19 @@ useEffect(() => {
 
       </div>
     </div>
-    
-    <div>
- 
+     <div style={{ marginLeft:'60%',marginTop:'-25%' }} className="flex items-center justify-start h-full mb-6">
+      
+      <div className="bg-white rounded-lg shadow-lg p-6 flex items-center space-x-4">
+        
+      <div style={{ width: '250px', height: '260px' }}>
+      <p className="text-gray-600 font-bold">Répresentation graphique : </p>
+
+      {chartData && chartData.datasets.length > 0 && (
+        <Pie data={chartData}  />
+      )}
+    </div>
+
+      </div>
     </div>
             <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden" style={{  marginLeft: "-25px" }}>
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg" >

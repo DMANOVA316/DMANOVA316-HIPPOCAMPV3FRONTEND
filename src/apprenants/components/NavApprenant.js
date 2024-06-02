@@ -1,7 +1,11 @@
 import React from 'react';
  
+import { useState, useEffect } from 'react';
+
 import { Link,useLocation } from 'react-router-dom';
 
+import Cookies from 'js-cookie';
+import axios from '@/api/axios'
  
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -38,6 +42,8 @@ const userNavigation = [
 const navigation = [
  { name: 'Liste des formations', href: '/coursapprenant' },
   { name: 'Mes cours', href: '/mescoursapprenant'},
+  { name: 'Messages', href: '/ListeMessageApp'},
+
     // { name: 'Progression', href: '#'},
     // { name: 'Chat', href: '#'},
   ]
@@ -55,6 +61,22 @@ function classNames(...classes) {
 
 const NavbarAccuiel = () => {
     const location = useLocation();
+    const token = Cookies.get('token');
+const [unreadMessages, setUnreadMessages] = useState('');
+
+
+    useEffect(() => {
+      // Effectuer une requête HTTP pour récupérer les détails de l'utilisateur et les paramètres de l'utilisateur
+      axios.get("/countVue?token=" + token)
+        .then((response) => {
+          setUnreadMessages(response.data);
+          console.log(response.data.image)
+        })
+        .catch((error) => {
+          console.error('Erreur lors de la récupération des détails de l\'utilisateur :', error);
+        });
+    }, []);
+    
 
     return (
     
@@ -80,6 +102,7 @@ const NavbarAccuiel = () => {
                             <a
                               key={item.name}
                               href={item.href} onClick={item.onClick}
+                              
                               className={classNames(
                                 location.pathname === item.href
                                 ? 'bg-gray-900 text-white'
@@ -89,6 +112,9 @@ const NavbarAccuiel = () => {
                               
                             >
                               {item.name}
+                              {item.name === 'Messages' && unreadMessages > 0 && (
+          <span className="top-0 right-0 bg-red-500 rounded-full text-xs font-bold px-2 py-1">{unreadMessages}</span>
+        )}
                             </a>
                           ))}
                         </div>

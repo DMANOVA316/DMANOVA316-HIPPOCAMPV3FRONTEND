@@ -8,8 +8,7 @@ import { useLocation , Link } from 'react-router-dom';
 
 import axios from '@/api/axios';
 import Swal from 'sweetalert2';
-import BarNav from '../components/BarNav';
-import Navform from '../components/Navform';
+import NavApprenant from '../components/NavApprenant';
 import Cookies from 'js-cookie';
 
 
@@ -24,7 +23,7 @@ const ApprenantList = () => {
   const [ListeMessage, setListeMessage] = useState([]);
 
   useEffect(() => {
-    axios.get("/MessagePrive?token="+token)
+    axios.get("/MessagePriApp?token="+token)
       .then((response) => {
         // Assurez-vous que la réponse contient des données avant de les traiter
         if (response.data && response.data.length > 0) {
@@ -64,9 +63,10 @@ const updateVue = async (idApprenant) => {
   
     return (
 <>
-<Navform/>
-<BarNav/>
+<NavApprenant/>
 
+<br></br>
+<br></br>
     <div className="flex items-center justify-center space-x-4 mt-16">                                    
   
     
@@ -92,11 +92,11 @@ const updateVue = async (idApprenant) => {
         onClick={() => handleRowClick(demande.idApprenant)}
     >
         <Link
-            to={`/MessageApprenant?idFormateur=${Formateur.idFormateur}&idApprenant=${demande.idApprenant}&tokenApprenant=${demande.tokenApprenant}`}
+            to={`/MessageFormateur?idFormateur=${demande.idFormateur}&idApprenant=${demande.idApprenant}&tokenform=${demande.token}`}
             className="block w-full h-full"
         >
             <td style={{color: demande.vue === 1 ? 'gray' : 'blue', fontWeight: "bold"}} className="px-2 py-3">
-                {demande.nom_apprenant} {demande.prenom_apprenant} :
+                {demande.nom_formateur} {demande.prenom_formateur} :
             </td>
             <td style={{color: demande.vue === 1 ? 'gray' : 'black'}} className="px-2 py-3">
                 {demande.message}
