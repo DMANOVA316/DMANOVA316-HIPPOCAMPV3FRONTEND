@@ -43,7 +43,10 @@ const ListCoursApprenant = () => {
 
   // Le reste de votre code...
 
-  
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('fr-FR', options);
+  }
   
   const styles = {
     commentaireBloc: {
@@ -659,7 +662,8 @@ const [contentSelectedWeb, setContentSelectedWeb] = useState('webinar'); // Déf
             {commentaire.commentaire}
             <br />
             <br />
-            {commentaire.datecommentaire}
+            {formatDate(commentaire.datecommentaire)}
+
             <br />
             
             <button onClick={() => handleReplyButtonClick(commentaire.idCommentaire)}>Répondre commentaire</button>
@@ -680,7 +684,8 @@ const [contentSelectedWeb, setContentSelectedWeb] = useState('webinar'); // Déf
             <br />
             {commentaire.reponsecommentaire}
             <br />
-            {commentaire.datereponsecommentaire}
+            {formatDate(commentaire.datereponsecommentaire)}
+
             <br />
           </li>
         ))}

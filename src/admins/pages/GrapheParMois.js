@@ -130,12 +130,24 @@ const chartData = {
                          
                     </div> 
                 </div> 
+                <div style={{width:'100%',display:'flex',justifyContent: 'flex-end'}}>
 
-            <select value={selectedAnnee} onChange={handleAnneeChange}>
+            <select
+            style={{
+              border: '1px solid #ddd',
+              borderRadius: '5px',
+              backgroundColor: '#f8f8f8',
+              fontSize: '1rem',
+              color: '#444',
+              marginRight: '10px',
+              cursor: 'pointer',
+            }}
+             value={selectedAnnee} onChange={handleAnneeChange}>
                 {annees.map((a) => (
                     <option key={a.annees} value={a.annees}>{a.annees}</option>
                 ))}
             </select>
+            </div>
             <div style={{ height: '400px' }}>
               <h1 className="text-center">Total revenu de la publicité annuel : {Totalrevenue} Ar</h1>
               <Line data={chartData} options={options} />

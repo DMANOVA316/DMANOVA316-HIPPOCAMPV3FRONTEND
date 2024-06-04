@@ -200,23 +200,107 @@ const convertTimerToSeconds = (timerString) => {
 
   return (
  
-
+    <>
   <div>
 <section className="bg-white dark:bg-gray-900">
-<h2>Compte à rebours</h2>
- 
+<style>
+    {`
+      .timer-container {
+        position: fixed;
+        top: 1rem; /* Ajustez cette valeur pour modifier la distance du haut */
+        left: 50%; /* Centré horizontalement */
+        transform: translateX(-50%); /* Aligner le conteneur au centre horizontalement */
+        z-index: 1000; /* Assurez-vous que le timer est au-dessus du contenu */
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: auto; /* Ajustez la largeur comme nécessaire */
+        padding: 1rem 2rem;
+        border-radius: 0.5rem;
+        background-color: white;
+        color: #333;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
 
-<div>
-    {timer !== null && !isNaN(timer) ? (
-      <div>
-        <h2>Temps restant : {formatTime(timer)}</h2>
-        {timer === 0 && (
-          <p>Temps écoulé!</p>
-        )}
-      </div>
-    ) : (
-      <p>Chargement...</p>
-    )}
+      .timer-box h2, .timer-box p {
+        margin: 0;
+      }
+
+      .timer-box h2 {
+        font-size: 2rem;
+        font-weight: bold;
+      }
+
+      .timer-box p {
+        font-size: 1.25rem;
+        color: #d32f2f; /* red-700 pour le texte "Temps écoulé!" */
+      }
+
+      .loading-message {
+        font-size: 1.25rem;
+      }
+
+      .question-container {
+        padding-top: 100px; /* Doit être supérieure à la hauteur du timer-box pour éviter que le contenu soit caché */
+        margin: 2rem 0;
+      }
+
+      .question-list {
+        list-style: none;
+        padding: 0;
+      }
+
+      .question-item {
+        margin-bottom: 1rem;
+        border: 1px solid #4299e1; /* blue-500 pour le bord des questions */
+        border-radius: 0.5rem;
+        padding: 1.5rem;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      }
+
+      .submit-button {
+        margin-top: 1rem;
+        background-color: #4299e1; /* blue-500 pour le bouton "Terminer" */
+        color: white;
+        padding: 0.75rem 1.5rem;
+        font-size: 1rem;
+        border-radius: 0.5rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+      }
+
+      .submit-button:hover {
+        background-color: #3182ce; /* blue-600 */
+      }
+
+      .submit-button:active {
+        background-color: #2b6cb0; /* blue-800 */
+      }
+
+      @media (max-width: 768px) {
+        .timer-box {
+          width: 80%; /* Ajustez pour les petits écrans */
+        }
+      }
+    `}
+  </style>
+
+ 
+<br></br>
+<p></p>
+<div className="timer-container">
+    <div className="timer-box">
+      {timer !== null && !isNaN(timer) ? (
+        <div>
+          <h2>Temps restant : {formatTime(timer)}</h2>
+          {timer === 0 && (
+            <p style={{color:'red'}}>Temps écoulé!</p>
+          )}
+        </div>
+      ) : (
+        <p className="loading-message">Chargement...</p>
+      )}
+    </div>
   </div>
       {/* Afficher les questions et les réponses ici */}
 <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
@@ -226,21 +310,21 @@ const convertTimerToSeconds = (timerString) => {
             <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
             {demandes.monExam.titreExamen}
             </h2>
-            <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">Vous pouvez commencer votre Examen dans cette page</p>
+            <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">Vous pouvez commencer votre Examen... Bonne chance !</p>
         </div>
     )}
 
-  <div className="mt-4">
+  <div className="question-container text-center mt-4">
     {questions && (
       <div>
         <ul className="grid grid-cols-1 gap-4 items-center justify-center bg-white-200">
           {questions && questions.map((question) => (
             <li
-              className="flex flex-col items-center min-h- justify-center cursor-pointer p-4 border border-blue-500 rounded-lg shadow-lg mb-2"
+              className="question-item"
               key={question.question_id}
             >
-                 <p className="text-lg font-bold text-blue-700">Question: {question.question_text}</p>
-                 <p className="text-lg font-bold text-blue-700">Vous avez droit à {question.totalAdmissible} réponse(s)</p>
+                 <p className="text-lg font-bold text-black-700">Question: {question.question_text}</p>
+                  
                  {question.responses.map((response) => (
                 <div className="mt-1 ml-2">
                   <li className="flex items-center justify-start">
@@ -257,7 +341,7 @@ const convertTimerToSeconds = (timerString) => {
                       className="ms-2 text-sm font-medium text-gray-600 dark:text-gray-300 w-40"
                     >
                       {response.reponse}
-                      {response.idReponse}
+ 
 
                     </label>
                   </li>
@@ -269,7 +353,7 @@ const convertTimerToSeconds = (timerString) => {
 
         <button
           onClick={envoyerReponsesAuBackend}
-          className="mt-4 bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600 focus:outline-none focus:shadow-outline-blue active:bg-blue-800">
+          className="submit-button">
           Terminer
         </button>
       </div>
@@ -278,6 +362,7 @@ const convertTimerToSeconds = (timerString) => {
   </div>
 </section>
 </div>
+</>
   );
 };
 

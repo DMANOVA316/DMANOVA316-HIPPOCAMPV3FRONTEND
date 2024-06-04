@@ -3,6 +3,8 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import Cookies from 'js-cookie';
 import axios from '@/api/axios';
+import BarNav from '../components/BarNav';
+import Navform from '../components/Navform';
 
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
@@ -45,10 +47,16 @@ const TauxReussiteChart = () => {
   };
 
   return (
-    <div>
-      <h1>Statistiques des Formations</h1>
-      <Bar data={chartData} options={options} />
+    <>
+    <Navform/>
+<BarNav/>
+<br></br>
+<br></br>
+    <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden" style={{ height: '550px' }}>
+ 
+      <Bar style={{marginLeft:'5%'}} data={chartData} options={options} />
     </div>
+    </>
   );
 };
 

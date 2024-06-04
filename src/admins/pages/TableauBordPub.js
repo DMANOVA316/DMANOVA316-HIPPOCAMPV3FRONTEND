@@ -90,18 +90,46 @@ const handleAnneeChange = (e) => {
                          
                     </div> 
                 </div>
-                <select value={selectedMois} onChange={handleMoisChange}>
-                {mois.map((m) => (
-                    <option key={m.id} value={m.id}>{m.mois}</option>
-                ))}
-            </select>
+                <div style={{width:'100%',display:'flex',justifyContent: 'flex-end'}}>
+                <select
+  style={{
+    padding: '10px 15px',
+    border: '1px solid #ddd',
+    borderRadius: '5px',
+    backgroundColor: '#f8f8f8',
+    fontSize: '1rem',
+    color: '#444',
+    marginRight: '10px',
+    cursor: 'pointer',
+  }}
+  value={selectedMois}
+  onChange={handleMoisChange}
+>
+  {mois.map((m) => (
+    <option key={m.id} value={m.id}>
+      {m.mois}
+    </option>
+  ))}
+</select>
 
-            <select value={selectedAnnee} onChange={handleAnneeChange}>
+<select style={{
+    border: '1px solid #ddd',
+    borderRadius: '5px',
+    backgroundColor: '#f8f8f8',
+    fontSize: '1rem',
+    color: '#444',
+    marginRight: '10px',
+    cursor: 'pointer',
+  }} value={selectedAnnee} onChange={handleAnneeChange}>
                 {annees.map((a) => (
                     <option key={a.annees} value={a.annees}>{a.annees}</option>
                 ))}
             </select>
-            <br></br>
+            </div>
+            <div style={{textAlign:'center'}}>
+            <p  class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-xl xl:text-xl 
+            dark:text-white text-gray-900">Tableau de bord Publicité</p>
+            </div>
             <br></br>
                 <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -122,14 +150,14 @@ const handleAnneeChange = (e) => {
                                 <td className="px-4 py-3">{demande.nomOrganisme}</td>
                                 <td className="px-4 py-3">{demande.nom_mois}</td>
                                 <td className="px-4 py-3">{demande.annee}</td>
-                                <td className="px-4 py-3">{demande.jourxmontant} Ar</td>
+                                <td className="px-4 py-3">{demande.jourxmontant.toLocaleString('fr-FR')} Ar</td>
                             </tr>
                         ))}
            
                         </tbody>
                         <br></br>
 <p class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-xl xl:text-xl 
-            dark:text-white text-gray-900">Total Revenue : {Totalrevenue} Ar</p>
+            dark:text-white text-gray-900">Total Revenue : {Totalrevenue.toLocaleString('fr-FR')} Ar</p>
 
                     </table>
                     

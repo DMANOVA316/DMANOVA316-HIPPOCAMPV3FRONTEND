@@ -129,7 +129,7 @@ useEffect(() => {
 
       </div>
     </div>
-     <div style={{ marginLeft:'60%',marginTop:'-25%' }} className="flex items-center justify-start h-full mb-6">
+     <div style={{ display:'flex',justifyContent: 'flex-end',marginTop:'-25%' }} className="flex items-center justify-start h-full mb-6">
       
       <div className="bg-white rounded-lg shadow-lg p-6 flex items-center space-x-4">
         

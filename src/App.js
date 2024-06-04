@@ -69,6 +69,7 @@ import TableauBordPub from '@/admins/pages/TableauBordPub';
 import GrapheParMois from '@/admins/pages/GrapheParMois';
 
 import AddCategorie from '@/admins/pages/AddCategorie';
+import AddLangue from '@/admins/pages/AddLangue';
 import DeleteCategorie from '@/admins/pages/DeleteCategorie';
 import Menu from '@/admins/pages/Menu';
 import ModifCategorie from '@/admins/pages/ModifCategorie';
@@ -221,6 +222,7 @@ function App() {
                     <Route path="modifCategorie" element={<ModifCategorie/>}/>
                     <Route path="deleteCategorie" element={<DeleteCategorie/>}/>
                     <Route path="addCategorie" element={<AddCategorie/>}/>
+                    <Route path="AddLangue" element={<AddLangue/>}/>
 
                     <Route path="/statA" element={<StatA/>}/>
                     <Route path="/statAm" element={<StatAm/>}/>

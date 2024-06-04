@@ -22,27 +22,46 @@ const DetailExamenApprenant = () => {
     const handleSubmitExam = async (e) => {
       e.preventDefault();
   
-      try {
-        if (idFormation && idExamen && token) {
-          const response = await axios.post(`/AjoutCheckExamen?token=${token}&idExamen=${idExamen}`);
-        
-        console.log(response.data);
 
-          window.location.href = "/listExamenApprenant?examen_id=" + idExamen + "&token=" + token + "&idFormation=" + idFormation;
-               
-    }   
-      } catch (error) {
-               console.error(error);
-          if(error.response?.status === 400) {
-            Swal.fire({
-                icon: 'error',
-                title: 'Desolé',
-                text: 'Vous avez déja passé cet examen ',
-                footer: '<a href=""></a>'
-              });
-      };
-  
-      }
+      try {
+        if (idFormation && idExamen && token ) {
+            // Vérifier si l'examen est déjà terminé
+            const responseTermine = await axios.get(`/isExamenDejaTermine?idExamen=${idExamen}`);
+            
+            // Vous pourriez devoir adapter cette condition selon la structure de response.data
+            if (responseTermine.data.examenDejaTermine) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Désolé',
+                    text: 'Vous avez déjà passé cet examen.',
+                    footer: '<a href=""></a>'
+                });
+            } else {
+                // Si l'examen n'est pas terminé, passer à la deuxième vérification
+            
+                    const responseAjout = await axios.post(`/AjoutCheckExamen?token=${token}&idExamen=${idExamen}`)
+                    console.log(responseAjout.data);
+                    window.location.href = "/listExamenApprenant?examen_id=" + idExamen + "&token=" + token + "&idFormation=" + idFormation;
+                
+            }
+        }  
+    } catch (error) {
+        console.error(error);
+        if (error.response?.status === 400) {
+            if (error.config.url.includes('isExamenDejaTermine')) {
+                // Gestion d'erreur pour la première requête
+                window.location.href = "/listExamenApprenant?examen_id=" + idExamen + "&token=" + token + "&idFormation=" + idFormation;
+            } else if (error.config.url.includes('AjoutCheckExamen')) {
+                // Gestion d'erreur pour la deuxième requête
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Désolé',
+                    text: 'Un problème est survenu.',
+                    footer: '<a href=""></a>'
+                });
+            }
+        }
+    }
     };
   
 
@@ -50,7 +69,14 @@ const DetailExamenApprenant = () => {
       <div>
       
       <div className="flex flex-col items-center justify-center mt-20 ml-20">
-       <h1>ceci est un examen</h1>
+
+      <div  className="flex items-center justify-start h-full mb-6">
+      <div class="bg-white rounded-lg shadow-lg p-6 flex items-center space-x-4" style={{marginLeft:'5%',maxWidth: '800px',width:'100%'}}>
+
+  <h1 style={{fontSize: '1.25rem', lineHeight: '1.6'}}>Cher(e) apprenant(e), veuillez prendre note que l'examen est chronométré, et une fois le décompte terminé, vous ne pourrez plus soumettre vos réponses. Rappelez-vous également que cet examen ne peut être passé qu’une seule fois ; il n'est pas possible de le repasser une fois terminé ou de le reprendre après la fermeture de la session d'examen. Soyez donc attentif(ve) et bon courage !</h1> 
+</div>
+    </div>
+       
 
 <form className="box font-medium w-full md:w-1/2 ml-auto" onSubmit={handleSubmitExam}>
         <input type="hidden" name="idFormation" value={idFormation} />

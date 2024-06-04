@@ -47,13 +47,13 @@ const ApprenantList = () => {
       });
   }, []);
 
-  const handleRowClick = (idApprenant) => {
+  const handleRowClick = (idFormateur) => {
     // Appeler la fonction pour mettre à jour la vue ici avec l'ID de l'apprenant
-    updateVue(idApprenant);
+    updateVue(idFormateur);
 }
-const updateVue = async (idApprenant) => {
+const updateVue = async (idFormateur) => {
   try {
-      const response = await axios.post("/updateVue?idApprenant=" + idApprenant);
+      const response = await axios.post("/updateVueApp?idFormateur=" + idFormateur);
       if (response.status === 200) {
       }
   } catch (error) {

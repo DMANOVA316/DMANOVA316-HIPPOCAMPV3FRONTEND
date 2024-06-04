@@ -53,6 +53,15 @@ function Dashboard() {
                 </Link>
               </li>
 
+            <li>
+            <Link to="/ajoutpublicite" className={`flex items-center p-2 text-white font-medium rounded-lg 
+            ${activeItem === 'ajoutpublicite' ? 'bg-gray-500 text-white' : 'text-gray-900 dark:text-white hover:bg-gray-700 dark:hover:bg-gray-700 group'}`} onClick={() => handleItemClick('ajoutpublicite')}>
+           <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+<path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m6-6H6"/>
+</svg>
+              <span className="ml-3">Ajout publicité</span>
+            </Link>
+          </li>
 
               <li>
                 <Link to="/listformateur" className={`flex items-center p-2 text-white font-medium rounded-lg 
@@ -107,15 +116,7 @@ function Dashboard() {
               </Link>
             </li>
 
-            <li>
-                <Link to="/ajoutpublicite" className={`flex items-center p-2 text-white font-medium rounded-lg 
-                ${activeItem === 'ajoutpublicite' ? 'bg-gray-500 text-white' : 'text-gray-900 dark:text-white hover:bg-gray-700 dark:hover:bg-gray-700 group'}`} onClick={() => handleItemClick('ajoutpublicite')}>
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-                </svg>
-                  <span className="ml-3">Ajout publicité</span>
-                </Link>
-              </li>
+
 
               <Link to="/menu" className={`flex items-center p-2 text-white font-medium rounded-lg 
               ${activeItem === 'menu' ? 'bg-gray-500 text-white' : 'text-gray-900 dark:text-white hover:bg-gray-700 dark:hover:bg-gray-700 group'}`} onClick={() => handleItemClick('menu')}>
@@ -129,6 +130,20 @@ function Dashboard() {
               </Link>
 
               <li>
+
+</li>
+
+<Link to="/AddLangue" className={`flex items-center p-2 text-white font-medium rounded-lg 
+${activeItem === 'AddLangue' ? 'bg-gray-500 text-white' : 'text-gray-900 dark:text-white hover:bg-gray-700 dark:hover:bg-gray-700 group'}`} onClick={() => handleItemClick('AddLangue')}>
+<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+<path stroke-linecap="round" stroke-linejoin="round" 
+d="M3 5h18M3 12h18m-9 7h9M5.5 8.5a17.9 17.9 0 000 7M8.5 5.5a17.884 17.884 0 017 0m0 0a17.884 17.884 0 010 7m0-7c1.167 2.333 1.167 4.667 0 7M11.5 8.5c0 1.167 2 1.167 2 0s-2-1.167-2 0zm0 0c0-1.167 2-1.167 2 0s-2 1.167-2 0zm2 2.5c-1.167 0-1.167 2 0 2s1.167-2 0-2z" />
+</svg>
+
+  <span className="ml-3">Langue</span>
+</Link>
+
+<li>
                 <Accordion collapseAll>
                   <Accordion.Panel>
 
@@ -191,8 +206,8 @@ function Dashboard() {
                 <Link to="/TableauBordPub" className={`flex items-center p-2 text-white font-medium rounded-lg 
                 ${activeItem === 'TableauBordPub' ? 'bg-gray-500 text-white' : 'text-gray-900 dark:text-white hover:bg-gray-700 dark:hover:bg-gray-700 group'}`} onClick={() => handleItemClick('TableauBordPub')}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-                </svg>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18M9 9l6 6m-6 0l6-6M21 3l-6 6"/>
+</svg>
                   <span className="ml-3">Tableau de Bord publicité</span>
                 </Link>
               </li>
@@ -200,8 +215,8 @@ function Dashboard() {
                 <Link to="/GrapheParMois" className={`flex items-center p-2 text-white font-medium rounded-lg 
                 ${activeItem === 'GrapheParMois' ? 'bg-gray-500 text-white' : 'text-gray-900 dark:text-white hover:bg-gray-700 dark:hover:bg-gray-700 group'}`} onClick={() => handleItemClick('GrapheParMois')}>
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75L11.25 15 15 9.75M21 12c0 1.268-.63 2.39-1.593 3.068a3.745 3.745 0 01-1.043 3.296 3.745 3.745 0 01-3.296 1.043A3.745 3.745 0 0112 21c-1.268 0-2.39-.63-3.068-1.593a3.746 3.746 0 01-3.296-1.043 3.745 3.745 0 01-1.043-3.296A3.745 3.745 0 013 12c0-1.268.63-2.39 1.593-3.068a3.745 3.745 0 011.043-3.296 3.746 3.746 0 013.296-1.043A3.746 3.746 0 0112 3c1.268 0 2.39.63 3.068 1.593a3.746 3.746 0 013.296 1.043 3.746 3.746 0 011.043 3.296A3.745 3.745 0 0121 12z" />
-                </svg>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M3 3v18h18M3 17l6-6 4 4 8-8"/>
+</svg>
                   <span className="ml-3">Graphique des pub mensuel</span>
                 </Link>
               </li>

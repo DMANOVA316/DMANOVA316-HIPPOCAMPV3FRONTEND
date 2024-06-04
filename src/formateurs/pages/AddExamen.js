@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 
 import axios from '@/api/axios';
 import Swal from 'sweetalert2';
+import BarNav from '../components/BarNav';
+import Navform from '../components/Navform';
 
 const AddExamen = () => {
   const location = useLocation();
@@ -126,12 +128,16 @@ const AddExamen = () => {
 
   return (
 
+    <> 
+    <Navform/>
+   <BarNav/>
+
     <div>
     <section class="bg-white dark:bg-gray-900">
 
     <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
         <div class="mx-auto mb-8 max-w-screen-sm lg:mb-16">
-            <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">Les Examens</h2>
+ 
             <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">Vous pouvez mettre votre Question d'examen dans cette page</p>
         </div>
  
@@ -241,7 +247,7 @@ const AddExamen = () => {
       Ajouter une réponse
     </button>
     <button className="bg-green-500 text-white px-4 py-2 rounded-md" onClick={handleSubmit}>
-      Envoyer
+      Confirmer
     </button>
   </div>
   )}
@@ -251,7 +257,7 @@ const AddExamen = () => {
 </div>
 </section>
 </div>
-   
+   </>
   );
 };
 

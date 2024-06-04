@@ -5,7 +5,8 @@ import { useLocation,Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from '@/api/axios';
 
-
+import BarNav from '../components/BarNav';
+import Navform from '../components/Navform';
 var stompClient =null;
 const ChatRoom = () => {
     
@@ -181,42 +182,64 @@ const [Type, setType] = useState('1');
 
     
     return (
-    <div className="container">
-               <p>nom Apprenant: {apprenant.nom} {apprenant.prenom}</p>
-       <p>nom Fomateur: {Formateur.nom} {Formateur.prenom}</p>
+
+     <> 
+ <Navform/>
+<BarNav/>
+<br></br>
+<br></br>
+<br></br>
+    <div className="container" style={{display:'flex',justifyContent:'flex-end'}} >
+  
  
         {userData.connected?
-           <div>
-        <div className="chat-box">
+           <div className="chat-box" style={{height:'50%',width:'70%',display:'flex',justifyContent:'flex-end',borderRadius:'3%'}} >
+           <div className="chat-content" style={{height:'480px',overflow:'auto',width:'100%'}}>
+               <ul style={messageStyle}>
+                   {[...ListeMessageDeux, ...privateMessages].map((message, index) => (
+                       <li key={index} style={{marginBottom: "10px", display: "flex", flexDirection: message.type === 2 ? "row" : "row-reverse", alignItems: "center"}}>
+                        
+                           <div style={{width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "#ddd", display: "flex", alignItems: "center", justifyContent: "center"}}>
+                               {message.type === 2 ? apprenant.nom.charAt(0):Formateur.nom.charAt(0)  }
+                           </div>
+                           <div style={{
+                               marginLeft: message.type === 2 ? "10px" : "0px",
+                               marginRight: message.type === 2 ? "0px" : "10px",
+                               backgroundColor: message.type === 2 ?  "#ECE5DD" : "#082A4D",
+                               padding: "10px",
+                               borderRadius: "10px",
+                               maxWidth: "80%",
+                               float: message.type === 2 ? "left" : "right",
+                               textAlign: "left",
+                               wordWrap: "break-word",
+                color:message.type === 2 ? "black" : "white"
 
-            <div className="chat-content">
-                <ul style={messageStyle}>
-                    {[...ListeMessageDeux, ...privateMessages].map((message, index) => (
-                        <li className={`message ${message.type === 1 ? "left" : "right"}`} key={index}>
-                            {message.type === 2 && <div className="avatar" style={{width: "40px", height: "40px", borderRadius: "50%", marginRight: "10px"}}>{apprenant.nom}</div>}
-                            <div className="message-data" style={{padding: "10px", borderRadius: "10px", backgroundColor: message.type === 1 ? "#ECE5DD" : "#DCF8C6", float: message.type === 1 ? "left" : "right", textAlign: message.type === 1 ? "left" : "right", wordWrap: "break-word"}}>{message.message}</div>
-                            {message.type === 1 && <div className="avatar self" style={{width: "40px", height: "40px", borderRadius: "50%", marginRight: "auto"}}>{Formateur.nom}</div>}
-                        </li>
-                    ))}
-                </ul>
-
-                <div className="send-message" style={{marginTop: "20px"}}>
-                    <input type="text" className="input-message" style={{width: "calc(100% - 80px)", padding: "10px", border: "1px solid #ccc", borderRadius: "5px"}} placeholder="enter the message" value={userData.message} onChange={handleMessage} /> 
-                    <button type="button" className="send-button" style={{width: "60px", padding: "10px", border: "none", borderRadius: "5px", backgroundColor: "#007bff", color: "#fff", cursor: "pointer"}} onClick={sendPrivateValue}>send</button>
-                </div>
-            </div>
-        </div>
-              </div>
+                           }}>
+                               {message.message}
+                           </div>
+                       </li>
+                   ))}
+               </ul>
+               <div className="send-message" style={{marginTop: "20px", display: "flex"}}>
+                   <input type="text" className="input-message" style={{flexGrow: 1, marginRight: "10px", padding: "10px", border: "1px solid #ccc", borderRadius: "5px"}} placeholder="Type a message..." value={userData.message} onChange={handleMessage} /> 
+                   <button type="button" className="send-button" style={{padding: "10px", border: "none", borderRadius: "5px", backgroundColor: "#007bff", color: "#fff", cursor: "pointer"}} onClick={sendPrivateValue}>envoyer</button>
+               </div>
+           </div>
+           
+       </div>
+     
  
         :
         <div className="register">
         
               <button type="button" onClick={registerUser}>
-                    connect
+              Acceder aux messages
               </button> 
         </div>}
     </div>
-    )
+    </>
+    );
+    
 }
 
 export default ChatRoom

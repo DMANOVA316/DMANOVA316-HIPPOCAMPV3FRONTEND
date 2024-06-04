@@ -23,7 +23,7 @@ const ApprenantList = () => {
   const [Formateur, setFormateur] = useState([]);
   const [examens, setExamens] = useState([]);
 
-
+  const options = { year: 'numeric', month: 'long', day: 'numeric' };
   useEffect(() => {
     // Effectuer une requête HTTP pour récupérer les détails de l'utilisateur et les paramètres de l'utilisateur
     axios.get(`/LesExamens?idFormation=${idFormation}`)
@@ -37,7 +37,10 @@ const ApprenantList = () => {
       });
   }, []);
  
- 
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('fr-FR', options);
+  }
 
     return (
 <>
@@ -67,7 +70,7 @@ const ApprenantList = () => {
                         {examens.map(demande => (
                             <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
                                 <td className="px-4 py-3">{demande.titreExamen}</td>
-                                <td className="px-4 py-3">{demande.dateDebutExamen}</td>
+                                <td className="px-4 py-3">{formatDate(demande.dateDebutExamen)}</td>
  
                                 <Link to={`/Resultat?idFormation=${idFormation}&idExamen=${demande.idExamen}`}
                          className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300 mt-4" ><td className="px-4 py-3"
