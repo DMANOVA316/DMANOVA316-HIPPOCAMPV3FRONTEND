@@ -366,7 +366,7 @@ const Profilformateur = () => {
 </div>
 </div>
   
-  {tokenApprenant} aiza eo: {apprenant.nom} {apprenant.prenom}
+ 
 <br></br>
 <br></br>
 <br></br>

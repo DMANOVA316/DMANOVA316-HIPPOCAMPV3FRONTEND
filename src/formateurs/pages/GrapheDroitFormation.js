@@ -16,6 +16,25 @@ const TauxReussiteChart = () => {
   const token = Cookies.get('token');
 
 
+  const [demandes, setDemandes] = useState([]);
+
+
+
+  useEffect(() => {
+      // Effectuer une requête HTTP pour récupérer les détails de l'utilisateur et les paramètres de l'utilisateur
+      axios.get("/MesFormation?token="+token)
+        .then((response) => {
+          setDemandes(response.data);
+          console.log(response.data.length);
+          console.log(response.data[0].image)
+
+        })
+        .catch((error) => {
+          console.error('Erreur lors de la récupération des détails de l\'utilisateur :', error);
+        });
+    }, []);
+
+
   useEffect(() => {
     axios.get(`/sommeDroitPaye?token=${token}`)
     .then(response => {
@@ -90,6 +109,9 @@ const TauxReussiteChart = () => {
         <Navform/>
 <BarNav/>
 <br></br>
+<br></br>
+
+
 
 <div  className="flex items-center justify-start h-full mb-6">
       <div  className="bg-white rounded-lg shadow-lg p-6 flex items-center space-x-4">
@@ -113,6 +135,34 @@ const TauxReussiteChart = () => {
  
       <Bar style={{marginLeft:'5%'}} data={chartData} options={options} />
     </div>
+    <br></br>
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg"  style={{ width:'100%',display:'flex',justifyContent: 'flex-end' }}>
+
+<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-white uppercase bg-blue-700 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                      <th scope="col" className="px-4 py-3">Nombre d'Apprenant</th>
+                      <th scope="col" className="px-4 py-3">Titre</th>
+                      <th scope="col" className="px-4 py-3">Prix</th>
+
+                  </tr>
+              </thead>
+              <tbody>
+              {demandes.map(demande => (
+                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <td className="px-4 py-3">{demande.totalEleve} </td>
+                      <td className="px-4 py-3">{demande.titre}</td>
+                      <td className="px-4 py-3">{demande.prix.toLocaleString('fr-FR')} Ar</td>
+                       
+ 
+                  </tr>
+              ))}
+
+              </tbody>
+          </table>
+ 
+</div>
+<br></br>
     </>
   );
 };

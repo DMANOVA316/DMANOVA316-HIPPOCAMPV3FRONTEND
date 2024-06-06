@@ -105,6 +105,8 @@ const handleAnneeChange = (e) => {
   value={selectedMois}
   onChange={handleMoisChange}
 >
+<option  >Mois</option>
+
   {mois.map((m) => (
     <option key={m.id} value={m.id}>
       {m.mois}
@@ -121,6 +123,8 @@ const handleAnneeChange = (e) => {
     marginRight: '10px',
     cursor: 'pointer',
   }} value={selectedAnnee} onChange={handleAnneeChange}>
+               <option  >Année</option>
+
                 {annees.map((a) => (
                     <option key={a.annees} value={a.annees}>{a.annees}</option>
                 ))}

@@ -56,7 +56,7 @@ const DetailExamenApprenant = () => {
                 Swal.fire({
                     icon: 'error',
                     title: 'Désolé',
-                    text: 'Un problème est survenu.',
+                    text: 'Vous avez déja fait cet examen',
                     footer: '<a href=""></a>'
                 });
             }

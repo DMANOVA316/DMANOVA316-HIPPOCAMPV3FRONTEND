@@ -121,50 +121,28 @@ const FormationList = () => {
       </div>
     </div>
 
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg"  style={{ width: "110%", marginLeft: "-55px" }}>
+          <div className="relative overflow-x-auto shadow-md sm:rounded-lg"  style={{ width:'100%',display:'flex',justifyContent: 'flex-end' }}>
 
-          <Table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-900">
-              <Table.Head className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                 
-                <Table.HeadCell>
-                  Nom Formation
-                </Table.HeadCell>
+          <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                        <thead className="text-xs text-white uppercase bg-blue-700 dark:bg-gray-700 dark:text-gray-400">
+                            <tr>
+                                <th scope="col" className="px-4 py-3">Titre Formation</th>
  
-             
-
-              </Table.Head>
-              <Table.Body className="divide-y">
-              {demandes.map(demande => (
-               
-     
-                <Table.Row className="bg-white dark:border-gray-900 dark:bg-gray-800">
-                   <Table.Cell>{demande.titre}</Table.Cell>
-                
-
-                  
-                  <Table.Cell className="flex items-center space-x-2">
-                   
-                    <>
-                      <Link
-                        className="font-medium text-cyan-600 hover:underline dark:text-cyan-500 mt-4"
-                        to={`/ResultatExamen?idFormation=${demande.idFormation}`}
-                      >
-<span className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300 mt-4">
-                        <span className="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
-                        Voir les apprenant
-                      </span>
-                      </Link>
-                      
-                    </>
-                </Table.Cell>
-
-                </Table.Row>
-                ))}
-
-
-              </Table.Body>
-            </Table>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        {demandes.map(demande => (
+                            <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                                <td className="px-4 py-3">{demande.titre}</td>
+ 
+                                <Link to={`/ResultatExamen?idFormation=${demande.idFormation}`}
+                         className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300 mt-4" ><td className="px-4 py-3">Voir resultat examen</td></Link>
+                            </tr>
+                        ))}
           
+                        </tbody>
+                    </table>
+           
           </div>
        
             </>

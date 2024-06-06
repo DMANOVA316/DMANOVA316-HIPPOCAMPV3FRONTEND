@@ -3,10 +3,31 @@ import axios from '@/api/axios';
 
 import { useLocation } from 'react-router-dom';
 import Swal from 'sweetalert2';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faSyncAlt } from '@fortawesome/free-solid-svg-icons';
 import Cookies from 'js-cookie';
 
 const ExamenComponent = () => {
+
+  const buttonStyle = {
+    backgroundColor: '#4CAF50', // Green background
+    border: 'none', // Remove borders
+    color: 'white', // White text
+    textAlign: 'center', // Centered text
+    textDecoration: 'none', // Remove underline
+    display: 'inline-block', // Get it to display inline
+    fontSize: '16px', // Increase font size
+    margin: '4px 2px', // Some margin
+    cursor: 'pointer', // Pointer/hand icon
+    borderRadius: '12px', // Rounded corners
+    transition: 'background-color 0.3s ease', // Smooth background color transition
+    width:'20%',
+    height:'1%'
+};
+
+const iconStyle = {
+    marginRight: '8px' // Space between icon and text
+};
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const idExamen = queryParams.get('examen_id');
@@ -50,7 +71,7 @@ const ExamenComponent = () => {
         icon: 'warning',
         title: 'Temps écoulé',
         text: 'Le temps pour passer cet examen est écoulé.',
-        allowOutsideClick: false,
+        //allowOutsideClick: false,
       }).then((result) => {
         if (result.isConfirmed) {
           envoyerReponsesAuBackend();
@@ -310,9 +331,9 @@ const convertTimerToSeconds = (timerString) => {
             <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
             {demandes.monExam.titreExamen}
             </h2>
-            <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">Vous pouvez commencer votre Examen... Bonne chance !</p>
         </div>
     )}
+            <p class="font-light text-green-500 sm:text-xl dark:text-green-400">Bonne chance !</p>
 
   <div className="question-container text-center mt-4">
     {questions && (
@@ -351,6 +372,41 @@ const convertTimerToSeconds = (timerString) => {
           ))}
         </ul>
 
+        <div className="question-container text-center mt-4">
+      <div>
+        <ul className="grid grid-cols-1 gap-4 items-center justify-center bg-white-200">
+            <li
+              className="question-item"
+            >
+                 <p className="text-lg font-bold text-black-700">Question: À votre avis, un projet c'est quoi ?</p>
+                  
+ <br></br>
+
+                <div className="mt-1 ml-2">
+                <p className="text-lg font-bold text-black-700">Votre reponse: </p>
+
+                 <p>Un projet est une entreprise temporaire, visant à créer un produit, un service ou un résultat unique. Il est caractérisé par des objectifs spécifiques, des ressources définies, un calendrier précis et un cycle de vie distinct comprenant généralement plusieurs phases.</p>
+ <br></br>
+
+                <button style={buttonStyle} className="update-button">
+            <FontAwesomeIcon icon={faSyncAlt} style={iconStyle} /> modifier votre reponse
+        </button>
+
+
+                <br></br>
+                <br></br>
+                  <textarea style={{width:'300px', height: '150px'}}></textarea>
+                      <button
+        className="ml-2 px-3 py-1 bg-blue-500 text-white rounded-md"
+      >
+        Confirmer
+      </button>
+                </div>
+            </li>
+        </ul>
+
+      </div>
+  </div>
         <button
           onClick={envoyerReponsesAuBackend}
           className="submit-button">
@@ -359,6 +415,8 @@ const convertTimerToSeconds = (timerString) => {
       </div>
     )}
   </div>
+
+
   </div>
 </section>
 </div>

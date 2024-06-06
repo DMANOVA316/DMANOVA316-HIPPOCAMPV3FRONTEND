@@ -414,7 +414,7 @@ const [contentSelectedWeb, setContentSelectedWeb] = useState('webinar'); // Déf
 <br></br>
  <div className="flex justify-between w-full">
 
-    <div style={{marginLeft:'8%',width:'60%',height:'1%'}}>
+    <div style={{marginLeft:'67%',width:'60%',height:'1%'}}>
   {moyenne !== null && (
     <div>
    

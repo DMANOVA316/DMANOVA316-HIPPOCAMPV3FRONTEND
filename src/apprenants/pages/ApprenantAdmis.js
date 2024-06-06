@@ -61,7 +61,6 @@ const style = {
     borderRadius: '10px',
     backgroundColor: '#f8f9fa',
     textAlign: 'center',
-    marginTop: '5%',
     marginLeft: '30%',
 
   },
@@ -78,6 +77,10 @@ const style = {
 
 // Composant du certificat
 const Certificate = ({ demandes }) => {
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('fr-FR', options);
+  }
   return (
     <Document>
     {demandes.map((demande, index) => (
@@ -89,7 +92,7 @@ const Certificate = ({ demandes }) => {
         <View style={styles.textContent}>
           <Text style={styles.title}>CERTIFICAT DE RÉUSSITE</Text>
           <Text style={styles.subtitle}>
-          {demande.phraseCertificat ? demande.phraseCertificat : 'Délivré par  ' } {demande.nomorgannisme} le {demande.dateexamen}</Text>
+          {demande.phraseCertificat ? demande.phraseCertificat : 'Délivré par  ' } {demande.nomorgannisme} le {formatDate(demande.datedebutexamen)}</Text>
 
           <Text style={{fontSize: 40,fontWeight: 'bold',marginTop: '3%', }}> {demande.nom} {demande.prenom}</Text>
 
@@ -135,8 +138,8 @@ const AdmissionCongratsWithCertificate = () => {
       )  : (
         <div>
           <h1 style={style.heading}>Félicitations {demandes[0].prenom} {demandes[0].nom} !</h1>
-            <p style={style.paragraph}>Nous sommes heureux de t'annoncer que tu as été admis à  .</p>
-            <p style={style.paragraph}>C'est une réalisation incroyable et nous sommes très fiers de toi. Ton travail acharné et ta détermination ont porté leurs fruits. Félicitations encore une fois et profite de cette incroyable réussite !</p>
+            <p style={style.paragraph}>Nous sommes heureux de t'annoncer que tu as été admis.</p>
+            <p style={style.paragraph}>C'est une réalisation incroyable et nous sommes très fiers de toi. Ton travail acharné et ta détermination ont porté leurs fruits.</p>
             <p style={style.paragraph}>Meilleurs vœux pour cette nouvelle étape de ton parcours éducatif.</p>
             <p style={style.paragraph}>Vous pouvez télécharger  votre certificat de reussite.</p>
         

@@ -93,7 +93,7 @@ const [userDetailsResponse, setUserDetailsResponse] = useState(null);
             Swal.fire({
                 icon: 'success',
                 title: 'Bravo',
-                text: 'Votre commentaire a été ajouter',
+                text: 'Publicité ajouté',
                 footer: '<a href=""></a>',
                 confirmButtonText: 'OK'
               }).then((result) => {

@@ -143,13 +143,16 @@ const chartData = {
               cursor: 'pointer',
             }}
              value={selectedAnnee} onChange={handleAnneeChange}>
+               <option  >Année</option>
                 {annees.map((a) => (
+                   
+
                     <option key={a.annees} value={a.annees}>{a.annees}</option>
                 ))}
             </select>
             </div>
             <div style={{ height: '400px' }}>
-              <h1 className="text-center">Total revenu de la publicité annuel : {Totalrevenue} Ar</h1>
+              <h1 className="text-center">Total revenu de la publicité annuel : {Totalrevenue.toLocaleString('fr-FR')} Ar</h1>
               <Line data={chartData} options={options} />
             </div>
             <br></br>

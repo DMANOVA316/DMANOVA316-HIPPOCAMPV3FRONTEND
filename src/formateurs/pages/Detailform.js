@@ -1,80 +1,87 @@
 'use client';
 import React from 'react';
 
-import { Dropdown } from 'flowbite-react';
+
+import { Dropdown} from 'flowbite-react';
 
 import axios from '@/api/axios';
 import { useLocation, Link} from 'react-router-dom';
 import { useState, useEffect } from 'react';
+
 import Cookies from 'js-cookie';
 
-
-import ZoomForm from '@/formateurs/pages/ZoomForm';
-import DetailZoom from '@/formateurs/pages/DetailZoom';
-import ChapitreAdmin from '@/admins/pages/ChapitreAdmin';
-import QuizAdmin from '@/admins/pages/QuizAdmin';
-import Navform from '@/formateurs/components/Navform';
-import ApprenantList from '../pages/ApprenantList';
+import Zoom from '../pages/Zoom';
+import DetailZoom from '../pages/DetailZoom';
+import Chapitre from '../pages/Chapitre';
+import Quiz from '../pages/Quiz';
 import Examens from '../pages/Examens';
+import ApprenantList from '../pages/ApprenantList';
+import Navform from '../components/Navform';
 import BarNav from '../components/BarNav';
 
 
-
-
-const VoirListForm = () => {
-  const styles = {
-    commentaireBloc: {
-      backgroundColor: '#f5f5f5', // couleur de fond légèrement plus sombre
-      borderRadius: '8px',
-      padding: '10px',
-      marginBottom: '10px',
-      maxWidth: '600px', // ajustement de la largeur maximale du bloc de commentaire
-    },
-  }
-
-  const style = {
-    commentaireBloc: {
-      backgroundColor: '#e0e0e0', // couleur de fond légèrement plus sombre
-      borderRadius: '8px',
-      padding: '10px',
-      marginBottom: '10px',
-      maxWidth: '600px', // ajustement de la largeur maximale du bloc de commentaire
-    },
-  }
+const Detailform = () => {
    
-  function formatDate(dateString) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('fr-FR', options);
-  }
+    const styles = {
+        commentaireBloc: {
+          backgroundColor: '#f5f5f5', // couleur de fond légèrement plus sombre
+          borderRadius: '8px',
+          padding: '10px',
+          marginBottom: '10px',
+          maxWidth: '600px', // ajustement de la largeur maximale du bloc de commentaire
+        },
+      }
+    
+      const style = {
+        commentaireBloc: {
+          backgroundColor: '#e0e0e0', // couleur de fond légèrement plus sombre
+          borderRadius: '8px',
+          padding: '10px',
+          marginBottom: '10px',
+          maxWidth: '600px', // ajustement de la largeur maximale du bloc de commentaire
+        },
+      }
+       
+      function formatDate(dateString) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('fr-FR', options);
+      }
+ 
+     
+        const [commentaires, setCommentaires] = useState([]);
+        const [Commentaire, setNouveauCommentaire] = useState("");
+        const token = Cookies.get('token');
+    
+        const NombreCommentairesInitial = 5;
+    
+        const [nombreCommentairesAffiches, setNombreCommentairesAffiches] = useState(NombreCommentairesInitial);
+    
+        const [reponsesForComment, setReponsesForComment] = useState([]);
+     
+        
+        const [reponsecommentaire, setReponsecommentaire] = useState("");
+      
+        const [showReplyForm, setShowReplyForm] = useState(null);
+        const handleAfficherPlus = () => {
+          // Augmentez le nombre de commentaires affichés de 5
+          setNombreCommentairesAffiches(nombreCommentairesAffiches+10);
+        };
+        const NombreRCommentairesInitial = 5;
+        const [nombreRCommentairesAffiches, setNombreRCommentairesAffiches] = useState(NombreRCommentairesInitial);
+    
+    
+        const handleRAfficherPlus = () => {
+          // Augmentez le nombre de commentaires affichés de 5
+          setNombreRCommentairesAffiches(nombreRCommentairesAffiches+10);
+        };
+         
+     
+
     const [demandes, setDemandes] = useState([]);
 
     const [contentSelected, setContentSelected] = useState(null);
-    const [commentaires, setCommentaires] = useState([]);
-    const [Commentaire, setNouveauCommentaire] = useState("");
-    const token = Cookies.get('token');
+   
 
-    const NombreCommentairesInitial = 5;
-
-    const [nombreCommentairesAffiches, setNombreCommentairesAffiches] = useState(NombreCommentairesInitial);
-
-    const [reponsesForComment, setReponsesForComment] = useState([]);
- 
-    
-    const [reponsecommentaire, setReponsecommentaire] = useState("");
-  
-    const [showReplyForm, setShowReplyForm] = useState(null);
-    const handleAfficherPlus = () => {
-      // Augmentez le nombre de commentaires affichés de 5
-      setNombreCommentairesAffiches(nombreCommentairesAffiches+10);
-    };
-    const NombreRCommentairesInitial = 5;
-    const [nombreRCommentairesAffiches, setNombreRCommentairesAffiches] = useState(NombreRCommentairesInitial);
-
-
-    const handleRAfficherPlus = () => {
-      // Augmentez le nombre de commentaires affichés de 5
-      setNombreRCommentairesAffiches(nombreRCommentairesAffiches+10);
-    };
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const idFormation = queryParams.get('idFormation');
@@ -98,7 +105,6 @@ const VoirListForm = () => {
       <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     },
-    
     ];
 
     const ContentDisplay = ({ content }) => {
@@ -149,6 +155,47 @@ const VoirListForm = () => {
         localStorage.setItem('showReplyForm', idCommentaire);
       };
       
+        // Fonction pour gérer l'envoi du commentaire
+        const handleCommentSubmit = async (e) => {
+            e.preventDefault();
+          
+            try {
+              if (idFormation && Commentaire && token) {
+                const response = await axios.post(`/AjoutCommentaireFormateur?idFormation=${idFormation}&Commentaire=${Commentaire}&token=${token}`);
+             // Traiter la réponse ou rafraîchir la liste des commentaires, etc.
+                console.log(response.data);
+          
+                
+                // Effacer le contenu du commentaire après l'envoi
+                setNouveauCommentaire("");
+                window.location.reload();
+            
+              }
+            } catch (error) {
+             
+            }
+          };
+          const handleCommentReponseSubmit = async (e,idCommentaire) => {
+            e.preventDefault();
+          
+            try {
+              if (idCommentaire && reponsecommentaire && token) {
+                const response = await axios.post(`/AjoutReponseCommentaireFormateur?idCommentaire=${idCommentaire}&reponsecommentaire=${reponsecommentaire}&token=${token}`);
+             // Traiter la réponse ou rafraîchir la liste des commentaires, etc.
+                console.log(response.data);
+          
+                
+                // Effacer le contenu du commentaire après l'envoi
+                setReponsecommentaire("");
+                window.location.reload();
+                
+                      
+              }
+            } catch (error) {
+             
+            }
+          };
+              
 
      
         const [selectedZoom, setSelectedZoom] = useState(null);
@@ -156,59 +203,18 @@ const VoirListForm = () => {
         const handleZoom = (zooms) => {
           setSelectedZoom(zooms);
         };
-    
-        // Fonction pour gérer l'envoi du commentaire
-   const handleCommentSubmit = async (e) => {
-    e.preventDefault();
-  
-    try {
-      if (idFormation && Commentaire && token) {
-        const response = await axios.post(`/AjoutCommentaireFormateur?idFormation=${idFormation}&Commentaire=${Commentaire}&token=${token}`);
-     // Traiter la réponse ou rafraîchir la liste des commentaires, etc.
-        console.log(response.data);
-  
-        
-        // Effacer le contenu du commentaire après l'envoi
-        setNouveauCommentaire("");
-        window.location.reload();
-    
-      }
-    } catch (error) {
-     
-    }
-  };
-  const handleCommentReponseSubmit = async (e,idCommentaire) => {
-    e.preventDefault();
-  
-    try {
-      if (idCommentaire && reponsecommentaire && token) {
-        const response = await axios.post(`/AjoutReponseCommentaireFormateur?idCommentaire=${idCommentaire}&reponsecommentaire=${reponsecommentaire}&token=${token}`);
-     // Traiter la réponse ou rafraîchir la liste des commentaires, etc.
-        console.log(response.data);
-  
-        
-        // Effacer le contenu du commentaire après l'envoi
-        setReponsecommentaire("");
-        window.location.reload();
-        
-              
-      }
-    } catch (error) {
-     
-    }
-  };
 
+        
+      
 
     return (
         <>
         <Navform/>
 <BarNav/>
-
-
         <main className="p-4 md:ml-4 h-auto pt-30">
         <section className="bg-gray-100 dark:bg-gray-900 p-3 sm:p-5">
             <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
-     {demandes && (
+     
                 <div className="bg-white relative shadow-md sm:rounded-lg overflow-hidden">
                     <div className="overflow-x-auto">
                         <div className="grid grid-cols-3 gap-6 text-sm text-left text-gray-500 dark:text-gray-400">
@@ -270,17 +276,16 @@ const VoirListForm = () => {
                             <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 18.75a60.07 60.07 0 0115.797 2.101c.727.198 1.453-.342 1.453-1.096V18.75M3.75 4.5v.75A.75.75 0 013 6h-.75m0 0v-.375c0-.621.504-1.125 1.125-1.125H20.25M2.25 6v9m18-10.5v.75c0 .414.336.75.75.75h.75m-1.5-1.5h.375c.621 0 1.125.504 1.125 1.125v9.75c0 .621-.504 1.125-1.125 1.125h-.375m1.5-1.5H21a.75.75 0 00-.75.75v.75m0 0H3.75m0 0h-.375a1.125 1.125 0 01-1.125-1.125V15m1.5 1.5v-.75A.75.75 0 003 15h-.75M15 10.5a3 3 0 11-6 0 3 3 0 016 0zm3 0h.008v.008H18V10.5zm-12 0h.008v.008H6V10.5z" />
                             </svg>
 
-                            <p className="text-2xl font-medium"> {demandes.prix ? Number(demandes.prix).toLocaleString('en-EN').replace('.') : ''} Ariary</p>
+                            <p className="text-2xl font-medium">{demandes.prix ? Number(demandes.prix).toLocaleString('en-EN').replace('.') : ''} Ariary</p>
                             <br/>
                         </div>
 <br/>
                         </div>
                     </div>
                 </div>
-                )}
 
     <div className="flex flex-col md:flex-row relative shadow-md sm:rounded-lg justify-between items-start md:items-center 
-                    space-y-3 md:space-y-0 p-4 mt-3">
+                    space-y-3 md:space-y-0 p-4 mt-3 border border-blue-500">
             <nav class="flex flex-col mt-4 font-medium lg:flex-row lg:space-x-8 lg:mt-0" aria-label="Table navigation">
                      
                     <div className="overflow-x-auto">
@@ -310,13 +315,12 @@ const VoirListForm = () => {
                         
                                     
                                     {activeTab === 1 && (
-                                    <>
                                       <div className="w-full flex justify-center lg:space-x-16">
 
                                         <div className="w-full">
 
-                                            <div className="flex justify-start mt-12">
-                                                <Dropdown label="Voir un contenu pédagogique" dismissOnClick={false}>
+                                            <div className="flex justify-start mt-20">
+                                                <Dropdown label="Ajouter un contenu pédagogique" dismissOnClick={false}>
                                                 <div>
                                                     <Dropdown.Item >
                                                         <p onClick={() => setContentSelected('chapitre')}>Chapitre</p>
@@ -335,19 +339,19 @@ const VoirListForm = () => {
 
                                             {contentSelected === 'chapitre' && (
                                                 <div>
-                                                <ChapitreAdmin/>
+                                                <Chapitre/>
                                                 </div>
                                               )}
 
                                               {contentSelected === 'webinar' && (
                                                 <div>
-                                                <ZoomForm/>
+                                                <Zoom/>
                                                 </div>
                                               )}
 
                                               {contentSelected === 'quiz' && (
                                                 <div>
-                                                <QuizAdmin/>
+                                                <Quiz/>
                                                 </div>
                                               )}
            
@@ -358,35 +362,29 @@ const VoirListForm = () => {
                                         </div>
 
                                       </div> 
-
-                                    </>
                                         
                                     )}
 
+                                    
                                     {activeTab === 2 && (
                                         <div className="mt-4">
                                          <ApprenantList/>
                                         </div>
                                     )}
-
-{activeTab === 3 && (
+                                    {activeTab === 3 && (
                                         <div className="mt-4">
                                          <Examens/>
                                         </div>
                                     )}
                         
                                 </div>
-                        </div>
+
+                            </div>
                     </div>
                 </nav>
-    </div>
-                
-
             </div>
-        </section>
-        
-
-    <div className="flex flex-wrap" style={{marginLeft:'5%'}} >
+        </div>
+        <div className="flex flex-wrap" style={{marginLeft:'5%'}} >
   {/* Section des commentaires à droite */}
   <div className="flex-grow">
     <div>
@@ -495,11 +493,11 @@ const VoirListForm = () => {
  
    
 </div>
-    
-    </main>
+    </section>
+</main>
 
     </>
     );
 };
 
-export default VoirListForm;
+export default Detailform;

@@ -117,8 +117,8 @@ useEffect(() => {
           {pourcentage.map(pourcentages => (
             <ul className="">
                                 <li className="px-4 py-3">Total inscrit : {pourcentages.totalinscrits}</li>
-                                <li className="px-4 py-3">Nombre admis : {pourcentages.admis}  ({pourcentages.pourcentageAdmis}%)</li>
-                                <li className="px-4 py-3">Nombre Non admis : {pourcentages.nonadmis}  ({pourcentages.pourcentageNonAdmis}%)</li>
+                                <li className="px-4 py-3">Nombre admis : {pourcentages.admis}  ({(pourcentages.pourcentageAdmis).toFixed(2)} %)</li>
+                                <li className="px-4 py-3">Nombre Non admis : {pourcentages.nonadmis}  ({(pourcentages.pourcentageNonAdmis).toFixed(2)}%)</li>
      
                         </ul>
         ))}  

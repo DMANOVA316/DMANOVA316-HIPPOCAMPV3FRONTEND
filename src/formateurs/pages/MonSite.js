@@ -95,7 +95,6 @@ const ListeFormationAcceuil = () => {
   </div>
   <div className="absolute bottom-10 flex justify items-center h-1 rounded-full" style={{marginLeft:'50%',top:'50%',color:CouleurTitre}}>
    
- <p> Cedi</p>
   
 </div>
 </div>

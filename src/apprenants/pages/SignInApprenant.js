@@ -192,7 +192,7 @@ const SignIn = () => {
            
            <img src={`http://localhost:8080/${logo}`} alt="" style={styles}/> 
     <h2 style={{color:couleurText}} class="max-w-2xl mb-4 text-4xl  tracking-tight leading-none md:text-4xl xl:text-xl 
-            dark:text-white text-gray-900"> Bienvenue sur l'espace de formation <strong style={{color:couleurText}}>[Nom de l'espace].</strong>  </h2>
+            dark:text-white text-gray-900"> Bienvenue sur l'espace de formation <strong style={{color:couleurText}}>{nomespace}.</strong>  </h2>
       </div>
 
 

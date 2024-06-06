@@ -17,8 +17,7 @@ const AddExamen = () => {
   const [question, setQuestion] = useState('');
 
   const [responses, setResponses] = useState([
-    { id: 1, text: 'Réponse 1', checked: false, note: 0 },
-    { id: 2, text: 'Réponse 2', checked: false, note: 0 },
+    { id: 1, text: 'Réponse', checked: false, note: 0 },
     
   ]);
 
@@ -138,7 +137,7 @@ const AddExamen = () => {
     <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
         <div class="mx-auto mb-8 max-w-screen-sm lg:mb-16">
  
-            <p class="font-light text-gray-500 sm:text-xl dark:text-gray-400">Vous pouvez mettre votre Question d'examen dans cette page</p>
+ 
         </div>
  
 
@@ -163,90 +162,95 @@ const AddExamen = () => {
         onChange={(e) => setQuestion(e.target.value)}
       />
     </label>
+    
     {demandes && (
-      <label className="block mb-2">
-        Type de question :
-        <select
-          className="w-full border border-gray-300 p-2 rounded-md mt-1"
-          value={idTypeQuestion}
-          onChange={(e) => handleTypeChange(e.target.value)}
-        >
-          {demandes.typeQuestion.map((typeQuestion) => (
-            <option key={typeQuestion.idTypeQuestion} value={typeQuestion.idTypeQuestion}>
-              {typeQuestion.nom}
-            </option>
-          ))}
-        </select>
-      </label>
-    )}
-  
-    {responses.map((response) => (
-      <div key={response.id} className="mb-4 flex items-center">
-        {idTypeQuestion === '2' ? (
-        
-          <input
-            type="checkbox"
-            checked={response.checked}
-            onChange={() =>
-              setResponses((prevResponses) =>
-                prevResponses.map((prevResponse) =>
-                  prevResponse.id === response.id
-                    ? { ...prevResponse, checked: !prevResponse.checked, note: 0 }
-                    : prevResponse
-                    
-                )
-              )
-            }
-          />
-      
-        ) : (
-          <input
-            type="radio"
-            checked={response.checked}
-            onChange={() => handleRadioChange(response.id)}
-          />
-        )}
+  <label className="block mb-2">
+    Type de question :
+    
+    <select
+    
+      className="w-full border border-gray-300 p-2 rounded-md mt-1"
+      value={idTypeQuestion}
+      onChange={(e) => handleTypeChange(e.target.value)}
+    >
+      <option>
+            Selectionnez
+          </option>
+      {demandes.typeQuestion
+        .filter((typeQuestion) => typeQuestion.idTypeQuestion === 2 || typeQuestion.idTypeQuestion === 3)
+        .map((typeQuestion) => (
+          <option key={typeQuestion.idTypeQuestion} value={typeQuestion.idTypeQuestion}>
+            {typeQuestion.nom}
+          </option>
+        ))}
+    </select>
+  </label>
+)}
 
-        <div className="ml-2">
-        <label className="block mb-2">
-        Reponse :
-        </label>
-        
+  
+  {responses.map((response) => (
+  <div key={response.id} className="mb-4 flex items-center">
+ {idTypeQuestion === '2' && (
+      <input
+        type="checkbox"
+        checked={response.checked}
+        onChange={() =>
+          setResponses((prevResponses) =>
+            prevResponses.map((prevResponse) =>
+              prevResponse.id === response.id
+                ? { ...prevResponse, checked: !prevResponse.checked, note: 0 }
+                : prevResponse
+            )
+          )
+        }
+      />
+    )}
+    <div className="ml-2">
+      <label className="block mb-2">Reponse :</label>
+      <input
+        type="text"
+        className="flex-grow border border-gray-300 p-2 rounded-md ml-2"
+        value={response.text}
+        onChange={(e) => handleResponseChange(response.id, e.target.value)}
+      />
+    </div>
+
+    {(idTypeQuestion === '3' || (idTypeQuestion !== '3' && response.checked)) && (
+      <div className="ml-2">
+        <label className="block mb-2">Note :</label>
         <input
           type="text"
-          className="flex-grow border border-gray-300 p-2 rounded-md ml-2"
-          value={response.text}
-          onChange={(e) => handleResponseChange(response.id, e.target.value)}
+          className="border border-gray-300 p-2 rounded-md"
+          placeholder="Entrez une note"
+          value={response.note}
+          onChange={(e) => handleNoteChange(response.id, e.target.value)}
         />
-        </div>
-       
-        {response.checked && (
-          <div className="ml-2">
-            <label className="block mb-2">Note :</label>
-            <input
-              type="text"
-              className="border border-gray-300 p-2 rounded-md"
-              placeholder="Entrez une note"
-              value={response.note}
-              onChange={(e) => handleNoteChange(response.id, e.target.value)}
-            />
-          </div>
-        )}
-        <button
-          className="ml-2 px-3 py-1 bg-red-500 text-white rounded-md"
-          onClick={() => handleRemoveResponse(response.id)}
-        >
-          Supprimer
-        </button>
       </div>
-    ))}
-    <button
-      className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
-      onClick={handleAddResponse}
-    >
-      Ajouter une réponse
-    </button>
-    <button className="bg-green-500 text-white px-4 py-2 rounded-md" onClick={handleSubmit}>
+    )}
+
+    {idTypeQuestion !== '4' && (
+      <button
+        className="ml-2 px-3 py-1 bg-red-500 text-white rounded-md"
+        onClick={() => handleRemoveResponse(response.id)}
+      >
+        Supprimer
+      </button>
+    )}
+  </div>
+))}
+
+{idTypeQuestion !== '3' && (
+  <button
+    className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
+    onClick={handleAddResponse}
+  >
+    Ajouter une réponse
+  </button>
+)}
+
+
+ 
+ <button className="bg-green-500 text-white px-4 py-2 rounded-md" onClick={handleSubmit}>
       Confirmer
     </button>
   </div>
