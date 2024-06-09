@@ -5,6 +5,8 @@ import axios from '@/api/axios';
 import Swal from 'sweetalert2';
 import BarNav from '../components/BarNav';
 import Navform from '../components/Navform';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const AddExamen = () => {
   const location = useLocation();
@@ -15,7 +17,6 @@ const AddExamen = () => {
 
 
   const [question, setQuestion] = useState('');
-
   const [responses, setResponses] = useState([
     { id: 1, text: 'Réponse', checked: false, note: 0 },
     
@@ -78,9 +79,16 @@ const AddExamen = () => {
           prevResponses.filter((response) => response.id !== id)
         );
       };
+      const [typeReponses, settypeReponses] = useState('');
 
   const handleSubmit = async () => {
   
+    let typeReponsesValue = '';
+  if(idTypeQuestion === '2') {
+    typeReponsesValue = '1';
+  } else if(idTypeQuestion === '3') {
+    typeReponsesValue = '2';
+  }
     try {
 
           const formData = new FormData();
@@ -88,24 +96,25 @@ const AddExamen = () => {
           formData.append('idTypeQuestion', idTypeQuestion);
           formData.append('question', question);
           formData.append('reponses', JSON.stringify(responses));
+
       
         
               // Utilisez votre URL correcte pour envoyer les données au serveur
-          const response = await axios.post('/newQuestionExamen', formData, {
+          const response = await axios.post("/newQuestionExamen?typeReponses="+typeReponsesValue, formData, {
             headers: {
               'Content-Type': 'application/json',
             },
           });
       
           console.log("Réponse du backend :", response.data);
-          Swal.fire("Succès", "Le quiz a été ajouté", "success");
+          Swal.fire("Succès", "L'examen a été ajouté", "success");
           window.location.href="/addExamen?idExamen="+ idExamen;
        } catch (error) {
 
         console.error('Erreur lors de l\'envoi des données au backend :', error);
-        Swal.fire("Erreur", "Le quiz n\'a pas été ajouté", "error");
+        Swal.fire("Erreur", "L'examen n\'a pas été ajouté", "error");
         //navigate("/addquiz")
-        window.location.href="/addExamen";
+        window.location.href="//addExamen?idExamen="+ idExamen;
 
     }
 
@@ -130,137 +139,134 @@ const AddExamen = () => {
     <> 
     <Navform/>
    <BarNav/>
+   <br></br>
+   <br></br>
+   <br></br>
 
-    <div>
-    <section class="bg-white dark:bg-gray-900">
-
-    <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
-        <div class="mx-auto mb-8 max-w-screen-sm lg:mb-16">
- 
- 
+   <div style={{marginLeft:'20%'}} className="min-h-screen bg-gray-50 dark:bg-gray-900 py-8">
+      <section className="bg-white dark:bg-gray-800 rounded-lg shadow-md p-6 mx-auto max-w-screen-lg">
+        <div className="flex flex-col items-center">
+          <button style={{backgroundColor:'#082A4D'}}
+            className="flex items-center bg-green-500 text-white text-lg font-bold px-4 py-2 rounded-lg transition-transform transform hover:scale-105"
+            onClick={toggleForm}
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 mr-2"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+            </svg>
+            Configuration des questions et reponses
+          </button>
         </div>
- 
 
-<div className="flex flex-col items-center min-h-full justify-center p-4 border-b-2 border-gray-200 rounded-lg">
-<button className="flex items-center justify-center bg-green-500 text-white text-xl font-bold px-4 py-2 
-                  rounded-lg"  onClick={toggleForm}>
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6 ml-2" fill="none"
-                        viewBox="0 0 24 24" stroke="currentColor">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6"/>
-                </svg>
-  Ajouter une question
-</button>
+        {showForm && (
+          <div className="mt-8 bg-gray-100 dark:bg-gray-700 p-6 rounded-lg shadow-md">
+            <label className="block mb-4">
+              <span className="text-gray-700 dark:text-gray-200">Question :</span>
+              <input
+                type="text"
+                className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                value={question}
+                onChange={(e) => setQuestion(e.target.value)}
+              />
+            </label>
 
-{showForm && (
-    <div className="p-4 sm:p-8 md:max-w-2xl mx-auto my-10 bg-white shadow-md rounded-md">
-    <label className="block mb-2">
-      Question :
-      <input
-        type="text"
-        className="w-full border border-gray-300 p-2 rounded-md mt-1"
-        value={question}
-        onChange={(e) => setQuestion(e.target.value)}
-      />
-    </label>
-    
-    {demandes && (
-  <label className="block mb-2">
-    Type de question :
-    
-    <select
-    
-      className="w-full border border-gray-300 p-2 rounded-md mt-1"
-      value={idTypeQuestion}
-      onChange={(e) => handleTypeChange(e.target.value)}
-    >
-      <option>
-            Selectionnez
-          </option>
-      {demandes.typeQuestion
-        .filter((typeQuestion) => typeQuestion.idTypeQuestion === 2 || typeQuestion.idTypeQuestion === 3)
-        .map((typeQuestion) => (
-          <option key={typeQuestion.idTypeQuestion} value={typeQuestion.idTypeQuestion}>
-            {typeQuestion.nom}
-          </option>
-        ))}
-    </select>
-  </label>
-)}
+            {demandes && (
+              <label className="block mb-4">
+                <span className="text-gray-700 dark:text-gray-200">Type de question :</span>
+                <select
+                  className="w-full mt-1 p-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                  value={idTypeQuestion}
+                  onChange={(e) => handleTypeChange(e.target.value)}
+                >
+                  <option value="">Selectionnez</option>
+                  {demandes.typeQuestion
+                    .filter((typeQuestion) => typeQuestion.idTypeQuestion === 2 || typeQuestion.idTypeQuestion === 3)
+                    .map((typeQuestion) => (
+                      <option key={typeQuestion.idTypeQuestion} value={typeQuestion.idTypeQuestion}>
+                        {typeQuestion.nom}
+                      </option>
+                    ))}
+                </select>
+              </label>
+            )}
 
-  
-  {responses.map((response) => (
-  <div key={response.id} className="mb-4 flex items-center">
- {idTypeQuestion === '2' && (
-      <input
-        type="checkbox"
-        checked={response.checked}
-        onChange={() =>
-          setResponses((prevResponses) =>
-            prevResponses.map((prevResponse) =>
-              prevResponse.id === response.id
-                ? { ...prevResponse, checked: !prevResponse.checked, note: 0 }
-                : prevResponse
-            )
-          )
-        }
-      />
-    )}
-    <div className="ml-2">
-      <label className="block mb-2">Reponse :</label>
-      <input
-        type="text"
-        className="flex-grow border border-gray-300 p-2 rounded-md ml-2"
-        value={response.text}
-        onChange={(e) => handleResponseChange(response.id, e.target.value)}
-      />
+            {responses.map((response) => (
+              <div key={response.id} className="flex items-center mb-4">
+                {idTypeQuestion === '2' && (
+                  <input
+                    type="checkbox"
+                    className="h-4 w-4 text-blue-600 border-gray-300 rounded focus:ring-blue-500"
+                    checked={response.checked}
+                    onChange={() =>
+                      setResponses((prevResponses) =>
+                        prevResponses.map((prevResponse) =>
+                          prevResponse.id === response.id
+                            ? { ...prevResponse, checked: !prevResponse.checked, note: 0 }
+                            : prevResponse
+                        )
+                      )
+                    }
+                  />
+                )}
+                <div className="flex-grow ml-2">
+                  <label className="block mb-1 text-gray-700 dark:text-gray-200">Réponse :</label>
+                  <input
+                    type="text"
+                    className="w-full p-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                    value={response.text}
+                    onChange={(e) => handleResponseChange(response.id, e.target.value)}
+                  />
+                </div>
+
+                {(idTypeQuestion === '3' || (idTypeQuestion !== '3' && response.checked)) && (
+                  <div className="ml-2">
+                    <label className="block mb-1 text-gray-700 dark:text-gray-200">Note :</label>
+                    <input
+                      type="text"
+                      className="p-2 border border-gray-300 rounded-md focus:border-blue-500 focus:ring focus:ring-blue-200 focus:ring-opacity-50"
+                      placeholder="Entrez une note"
+                      value={response.note}
+                      onChange={(e) => handleNoteChange(response.id, e.target.value)}
+                    />
+                  </div>
+                )}
+
+                {idTypeQuestion !== '4' && (
+                  <button
+                    className="ml-2 p-2 bg-red-500 text-white rounded-md hover:bg-red-600 transition-colors"
+                    onClick={() => handleRemoveResponse(response.id)}
+                  >
+                    <FontAwesomeIcon icon={faTrash} className="h-5 w-5" />
+                  </button>
+                )}
+              </div>
+            ))}
+
+            {idTypeQuestion !== '3' && (
+               <button
+                className="mt-4 bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600 transition-colors mr-4" // Ajoutez mr-4 ici
+                onClick={handleAddResponse}
+              >
+                Une autre réponse
+              </button>
+            )}
+
+            <button style={{backgroundColor:'#082A4D'}}
+              className="mt-4 bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600 transition-colors"
+              onClick={handleSubmit}
+            >
+              Confirmer
+            </button>
+
+          </div>
+        )}
+      </section>
     </div>
-
-    {(idTypeQuestion === '3' || (idTypeQuestion !== '3' && response.checked)) && (
-      <div className="ml-2">
-        <label className="block mb-2">Note :</label>
-        <input
-          type="text"
-          className="border border-gray-300 p-2 rounded-md"
-          placeholder="Entrez une note"
-          value={response.note}
-          onChange={(e) => handleNoteChange(response.id, e.target.value)}
-        />
-      </div>
-    )}
-
-    {idTypeQuestion !== '4' && (
-      <button
-        className="ml-2 px-3 py-1 bg-red-500 text-white rounded-md"
-        onClick={() => handleRemoveResponse(response.id)}
-      >
-        Supprimer
-      </button>
-    )}
-  </div>
-))}
-
-{idTypeQuestion !== '3' && (
-  <button
-    className="bg-blue-500 text-white px-4 py-2 rounded-md mr-2"
-    onClick={handleAddResponse}
-  >
-    Ajouter une réponse
-  </button>
-)}
-
-
- 
- <button className="bg-green-500 text-white px-4 py-2 rounded-md" onClick={handleSubmit}>
-      Confirmer
-    </button>
-  </div>
-  )}
-  </div>
-  
-  
-</div>
-</section>
-</div>
    </>
   );
 };

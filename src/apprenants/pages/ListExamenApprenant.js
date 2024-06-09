@@ -38,6 +38,13 @@ const iconStyle = {
   const [idrep, setIdrep] = useState([]);
   const [intervalId, setIntervalId] = useState(null);
 
+  const [reponsesOuvertes, setReponsesOuvertes] = useState({});
+  const [dernieresReponses, setDernieresReponses] = useState({});
+  const [actions, setActions] = useState({});
+  const [idQuestion, setDernieridQuestion] = useState('0');
+
+
+
   useEffect(() => {
     axios.get(`/examTimer?idExamen=${idExamen}`)
       .then((response) => {
@@ -177,6 +184,99 @@ const convertTimerToSeconds = (timerString) => {
       });
     }
   };
+
+  useEffect(() => {
+    const initialActions = {};
+    questions.forEach((question) => {
+      if (dernieresReponses[question.question_id]) {
+        initialActions[question.question_id] = 'update';
+      } else {
+        initialActions[question.question_id] = 'insert';
+      }
+    });
+    setActions(initialActions);
+  }, [dernieresReponses, questions]);
+
+  const handleChangee = (questionId, value) => {
+    setReponsesOuvertes((prev) => ({
+      ...prev,
+      [questionId]: value,
+    }));
+  };
+
+  const insertReponseLibre = async (e, questionId) => {
+    e.preventDefault();
+    const reponse = reponsesOuvertes[questionId];
+  
+    try {
+      const response = await axios.post(
+        `/PasserExamenReponseLibre?idExamen=${encodeURIComponent(idExamen)}&idQuestion=${encodeURIComponent(questionId)}&reponselibre=${encodeURIComponent(reponse)}&token=${encodeURIComponent(token)}`
+      );
+  
+      if (response.status === 200) {
+        Swal.fire('Succès', 'Réponse soumise avec succès', 'success');
+        setDernieresReponses((prev) => ({
+          ...prev,
+          [questionId]: reponse,
+        }));
+        setReponsesOuvertes((prev) => ({
+          ...prev,
+          [questionId]: '',
+        }));
+        setActions((prev) => ({
+          ...prev,
+          [questionId]: 'update',
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Il y a une erreur',
+      });
+    }
+  };
+  
+  const updateReponseLibre = async (e, questionId) => {
+    e.preventDefault();
+    const reponse = reponsesOuvertes[questionId];
+  
+    try {
+      const response = await axios.post(
+        `/updateReponseLibre?idQuestion=${encodeURIComponent(questionId)}&reponselibre=${encodeURIComponent(reponse)}`
+      );
+  
+      if (response.status === 200) {
+        Swal.fire('Succès', 'Réponse mise à jour avec succès', 'success');
+        setDernieresReponses((prev) => ({
+          ...prev,
+          [questionId]: reponse,
+        }));
+        setReponsesOuvertes((prev) => ({
+          ...prev,
+          [questionId]: '',
+        }));
+      }
+    } catch (error) {
+      console.error(error);
+      Swal.fire({
+        icon: 'error',
+        title: 'Oops...',
+        text: 'Il y a une erreur',
+      });
+    }
+  };
+  
+  const handleSubmit = async (e, questionId) => {
+    e.preventDefault();
+    if (actions[questionId] === 'insert') {
+      await insertReponseLibre(e, questionId);
+    } else if (actions[questionId] === 'update') {
+      await updateReponseLibre(e, questionId);
+    }
+  };
+
   useEffect(() => {
   const fetchQuestions = async () => {
     try {
@@ -216,9 +316,8 @@ const convertTimerToSeconds = (timerString) => {
     response: [],
 });
 
-
-
-
+ 
+ 
   return (
  
     <>
@@ -273,10 +372,9 @@ const convertTimerToSeconds = (timerString) => {
 
       .question-item {
         margin-bottom: 1rem;
-        border: 1px solid #4299e1; /* blue-500 pour le bord des questions */
         border-radius: 0.5rem;
         padding: 1.5rem;
-        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        box-shadow: 0 20px 30px rgba(0, 0, 0, 0.1);
       }
 
       .submit-button {
@@ -325,7 +423,9 @@ const convertTimerToSeconds = (timerString) => {
   </div>
       {/* Afficher les questions et les réponses ici */}
 <div class="py-8 px-4 mx-auto max-w-screen-xl text-center lg:py-16 lg:px-6">
-
+<br></br>
+<br></br>
+<br></br>
     {demandes && (
         <div class="mx-auto mb-8 max-w-screen-sm lg:mb-16">
             <h2 class="mb-4 text-4xl tracking-tight font-extrabold text-gray-900 dark:text-white">
@@ -333,87 +433,82 @@ const convertTimerToSeconds = (timerString) => {
             </h2>
         </div>
     )}
-            <p class="font-light text-green-500 sm:text-xl dark:text-green-400">Bonne chance !</p>
+            <p class="font-light text-green-500 sm:text-4xl dark:text-green-400">Bonne chance !</p>
 
-  <div className="question-container text-center mt-4">
-    {questions && (
+            <div className="flex items-center justify-center h-full mb-6">
+            <div className="bg-white rounded-lg shadow-lg p-6 flex items-center space-x-4">  {questions && (
       <div>
-        <ul className="grid grid-cols-1 gap-4 items-center justify-center bg-white-200">
+        <ul className="grid grid-cols-1 gap-4 items-start justify-start bg-white-200">
           {questions && questions.map((question) => (
             <li
               className="question-item"
               key={question.question_id}
             >
-                 <p className="text-lg font-bold text-black-700">Question: {question.question_text}</p>
-                  
-                 {question.responses.map((response) => (
-                <div className="mt-1 ml-2">
-                  <li className="flex items-center justify-start">
-                    <input
-                      id={`default-checkbox-${response.idReponse}`} 
-                      type="checkbox"
-                      name="idreponses"
-                      value={response.idReponse}
-                      className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
-                      onChange={(e) => handleChange(e, question, response)}
-                    />
-                    <label
-                       htmlFor={`default-checkbox-${response.idReponse}`}
-                      className="ms-2 text-sm font-medium text-gray-600 dark:text-gray-300 w-40"
-                    >
-                      {response.reponse}
- 
+                 <div className="flex items-start justify-start">
+  <p className="text-lg font-bold text-black-700">Question: {question.question_text}</p>
+</div>
 
-                    </label>
-                  </li>
-                </div>
-              ))}
+                 {question.responses.map((response) => (
+
+  <div key={response.idReponse} className="mt-1 ml-2">
+
+    {response.typeReponses === 2 ? (
+     <div> 
+      <form key={question.question_id} onSubmit={(e) => handleSubmit(e, question.question_id)} className="flex flex-col items-start mt-6">
+  
+  Votre réponse: <p className="text-xl font-medium text-gray-600 dark:text-gray-300">{dernieresReponses[question.question_id]}</p>
+<br></br>
+  <textarea
+    style={{ width: '300px', height: '150px' }}
+    id={`ReponsOuvert-${question.question_id}`}
+    name={`ReponsOuvert-${question.question_id}`}
+    value={reponsesOuvertes[question.question_id] || ''}
+    onChange={(e) => handleChangee(question.question_id, e.target.value)}
+    className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-2"
+    placeholder="Saisissez votre réponse..."
+  />
+
+  <div className="flex items-start">
+    <button type="submit" className="px-3 py-1 bg-blue-500 text-white rounded-md">
+      {actions[question.question_id] === 'update' ? 'Modifier la réponse' : 'Soumettre'}
+    </button>
+  </div>
+</form>
+   </div>
+    ) : (
+
+      <li className="flex items-center justify-start space-x-2">
+  <input
+    id={`default-checkbox-${response.idReponse}`} 
+    type="checkbox"
+    name="idreponses"
+    value={response.idReponse}
+    className="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600"
+    onChange={(e) => handleChange(e, question, response)}
+  />
+  <label
+    htmlFor={`default-checkbox-${response.idReponse}`}
+    className="text-xl font-medium text-gray-600 dark:text-gray-300"
+  >
+    {response.reponse}
+  </label>
+</li>
+    )}
+  </div>
+))}
             </li>
           ))}
         </ul>
 
-        <div className="question-container text-center mt-4">
-      <div>
-        <ul className="grid grid-cols-1 gap-4 items-center justify-center bg-white-200">
-            <li
-              className="question-item"
-            >
-                 <p className="text-lg font-bold text-black-700">Question: À votre avis, un projet c'est quoi ?</p>
-                  
- <br></br>
-
-                <div className="mt-1 ml-2">
-                <p className="text-lg font-bold text-black-700">Votre reponse: </p>
-
-                 <p>Un projet est une entreprise temporaire, visant à créer un produit, un service ou un résultat unique. Il est caractérisé par des objectifs spécifiques, des ressources définies, un calendrier précis et un cycle de vie distinct comprenant généralement plusieurs phases.</p>
- <br></br>
-
-                <button style={buttonStyle} className="update-button">
-            <FontAwesomeIcon icon={faSyncAlt} style={iconStyle} /> modifier votre reponse
-        </button>
-
-
-                <br></br>
-                <br></br>
-                  <textarea style={{width:'300px', height: '150px'}}></textarea>
-                      <button
-        className="ml-2 px-3 py-1 bg-blue-500 text-white rounded-md"
-      >
-        Confirmer
-      </button>
-                </div>
-            </li>
-        </ul>
-
-      </div>
-  </div>
-        <button
+         
+        <button style={{backgroundColor:'#082A4D'}}
           onClick={envoyerReponsesAuBackend}
-          className="submit-button">
-          Terminer
+          className="bg-green-500 text-white px-4 py-2 rounded-md">
+          Terminer 
         </button>
       </div>
     )}
+  </div>
   </div>
 
 

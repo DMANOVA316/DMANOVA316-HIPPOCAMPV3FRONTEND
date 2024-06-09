@@ -203,14 +203,55 @@ function SuivreCours() {
                         ))}
                       </ul>
                     )}
-
-
-<li className="flex items-center p-2 text-blue-900 font-medium rounded-lg border border-blue-900">
-                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
-                         stroke="currentColor" className="w-6 h-6">
-                        <path stroke-linecap="round" stroke-linejoin="round"
-                              d="M9.879 7.519c1.171-1.025 3.071-1.025 4.242 0 1.172 1.025 1.172 2.687 0 3.712-.203.179-.43.326-.67.442-.745.361-1.45.999-1.45 1.827v.75M21 12a9 9 0 11-18 0 9 9 0 0118 0zm-9 5.25h.008v.008H12v-.008z"/>
+              <li>
+                  <button type="button" className="flex items-center p-2 w-full text-base font-medium text-blue-900 
+                  rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 mt-8"
+                  aria-controls="dropdown-zoom" data-collapse-toggle="dropdown-zoom">
+                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
+                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
+                  </svg>
+                    <span className="flex-1 ml-3 text-left text-blue-900 whitespace-nowrap">
+                    Webinar
+                    </span>
+                    <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" 
+                    xmlns="http://www.w3.org/2000/svg">
+                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 
+                      111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
                     </svg>
+                  </button>
+              <ul id="dropdown-zoom" className="hidden py-2 space-y-2">
+                <li>      
+        
+                      {demandes.meszooms && (
+                        <ul className="list-decimal pl-6">
+                        {demandes.meszooms.map((zoom) => (
+
+                            <li className="mt-5 text-blue-500">
+                           
+                                  
+                                      <p key={zoom.idZoom} value={zoom.idZoom} className="text-blue-500 ml-4">
+                                          <Link className="font-medium text-cyan-600 hover:underline dark:text-cyan-500 mb-2" 
+                                          to={`listzoomapprenant?idZoom=${zoom.idZoom}&idFormation=${idFormation}`}>
+                                          {zoom.titre}
+                                          </Link>
+                                      </p> 
+                              
+                            </li>
+                        ))}
+                        </ul>
+                        )}
+                </li>
+              </ul>
+              <br></br>
+
+              <li className="flex items-center p-2 text-blue-900 font-medium rounded-lg border border-blue-900">
+              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+  
+  <path stroke-linecap="round" stroke-linejoin="round" d="M17 2H7a2 2 0 00-2 2v16a2 2 0 002 2h10a2 2 0 002-2V4a2 2 0 00-2-2z"/>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M7 6h10M7 10h10M7 14h7"/>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M20 22l-2-2 2-2 2 2-2 2zM16 6l4 4"/>
+  <path stroke-linecap="round" stroke-linejoin="round" d="M16 6l-1.5-1.5a2 2 0 112.828-2.828L18 4"/>
+</svg>
                 {examens.map((exam) => (
                     <div className="ml-3 flex items-center flex-col">
                         <span className="text-blue-900">{exam.etat} </span>
@@ -248,48 +289,8 @@ function SuivreCours() {
                 ))}
               </ul>
 
-              <li>
-                  <button type="button" className="flex items-center p-2 w-full text-base font-medium text-blue-900 
-                  rounded-lg transition duration-75 group hover:bg-gray-100 dark:text-white dark:hover:bg-gray-700 mt-8"
-                  aria-controls="dropdown-zoom" data-collapse-toggle="dropdown-zoom">
-                  <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                  <path stroke-linecap="round" stroke-linejoin="round" d="M9 17.25v1.007a3 3 0 01-.879 2.122L7.5 21h9l-.621-.621A3 3 0 0115 18.257V17.25m6-12V15a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 15V5.25m18 0A2.25 2.25 0 0018.75 3H5.25A2.25 2.25 0 003 5.25m18 0V12a2.25 2.25 0 01-2.25 2.25H5.25A2.25 2.25 0 013 12V5.25" />
-                  </svg>
 
 
-                    <span className="flex-1 ml-3 text-left text-blue-900 whitespace-nowrap">
-                    Webinar
-                    </span>
-                    <svg aria-hidden="true" className="w-6 h-6" fill="currentColor" viewBox="0 0 20 20" 
-                    xmlns="http://www.w3.org/2000/svg">
-                      <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 
-                      111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd"></path>
-                    </svg>
-                  </button>
-      
-              <ul id="dropdown-zoom" className="hidden py-2 space-y-2">
-                <li>      
-        
-                      {demandes.meszooms && (
-                        <ul className="list-decimal pl-6">
-                        {demandes.meszooms.map((zoom) => (
-
-                            <li className="mt-5 text-blue-500">
-                           
-                                  
-                                      <p key={zoom.idZoom} value={zoom.idZoom} className="text-blue-500 ml-4">
-                                          <Link className="font-medium text-cyan-600 hover:underline dark:text-cyan-500 mb-2" 
-                                          to={`listzoomapprenant?idZoom=${zoom.idZoom}&idFormation=${idFormation}`}>
-                                          {zoom.titre}
-                                          </Link>
-                                      </p> 
-                              
-                            </li>
-                        ))}
-                        </ul>
-                        )}
-                </li>
-              </ul>
             </li>
         </ul>
             
