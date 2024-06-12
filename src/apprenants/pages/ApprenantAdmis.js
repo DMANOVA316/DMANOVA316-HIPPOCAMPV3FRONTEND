@@ -118,6 +118,7 @@ const AdmissionCongratsWithCertificate = () => {
   const token = Cookies.get('token');
   const [demandes, setDemandes] = useState([]);
 
+  const [noteTotal, setNoteTotal] = useState();
   useEffect(() => {
     axios.get("/CetificatAdmis?idExamen=" + idExamen + "&token="+ token)
       .then((response) => {
@@ -128,6 +129,16 @@ const AdmissionCongratsWithCertificate = () => {
       });
   }, [idExamen, token]);
 
+  useEffect(() => {
+    // Effectuer une requête HTTP pour récupérer les détails de l'utilisateur et les paramètres de l'utilisateur
+    axios.get("/noteTotal?idExamen=" + idExamen)
+      .then((response) => {
+          setNoteTotal(response.data);
+      })
+      .catch((error) => {
+        console.error('Erreur lors de la récupération des détails de l\'utilisateur :', error);
+      });
+  }, []);
   return (
     <div style={style.congratsPage}>
       {demandes.length === 0 ? (
@@ -138,7 +149,7 @@ const AdmissionCongratsWithCertificate = () => {
       )  : (
         <div>
           <h1 style={style.heading}>Félicitations {demandes[0].prenom} {demandes[0].nom} !</h1>
-            <p style={style.paragraph}>Nous sommes heureux de t'annoncer que tu as été admis.</p>
+            <p style={style.paragraph}>Nous sommes heureux de t'annoncer que tu as été admis avec une note de <strong>{demandes[0].noteapprenant}/{noteTotal}</strong></p>
             <p style={style.paragraph}>C'est une réalisation incroyable et nous sommes très fiers de toi. Ton travail acharné et ta détermination ont porté leurs fruits.</p>
             <p style={style.paragraph}>Meilleurs vœux pour cette nouvelle étape de ton parcours éducatif.</p>
             <p style={style.paragraph}>Vous pouvez télécharger  votre certificat de reussite.</p>

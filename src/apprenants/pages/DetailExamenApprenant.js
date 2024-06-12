@@ -20,49 +20,43 @@ const DetailExamenApprenant = () => {
   
 
     const handleSubmitExam = async (e) => {
-      e.preventDefault();
-  
-
-      try {
-        if (idFormation && idExamen && token ) {
-            // Vérifier si l'examen est déjà terminé
-            const responseTermine = await axios.get(`/isExamenDejaTermine?idExamen=${idExamen}`);
-            
-            // Vous pourriez devoir adapter cette condition selon la structure de response.data
-            if (responseTermine.data.examenDejaTermine) {
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Désolé',
-                    text: 'Vous avez déjà passé cet examen.',
-                    footer: '<a href=""></a>'
-                });
-            } else {
-                // Si l'examen n'est pas terminé, passer à la deuxième vérification
-            
-                    const responseAjout = await axios.post(`/AjoutCheckExamen?token=${token}&idExamen=${idExamen}`)
-                    console.log(responseAjout.data);
-                    window.location.href = "/listExamenApprenant?examen_id=" + idExamen + "&token=" + token + "&idFormation=" + idFormation;
+        e.preventDefault();
+    
+        try {
+            if (idFormation && idExamen && token) {
+                // Vérifier si l'examen est déjà terminé
+                const responseTermine = await axios.get(`/isExamenDejaTermine`, { params: { idExamen } });
                 
+                if (responseTermine.data) {
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Désolé',
+                        text: 'Cet examen est déjà terminé.',
+                    });
+                    return;
+                }
+                const responseAjout = await axios.post(`/AjoutCheckExamen`, null, { params: { token, idExamen } });
+                console.log(responseAjout.data);
+                window.location.href = `/listExamenApprenant?examen_id=${idExamen}&token=${token}&idFormation=${idFormation}`;
             }
-        }  
-    } catch (error) {
-        console.error(error);
-        if (error.response?.status === 400) {
-            if (error.config.url.includes('isExamenDejaTermine')) {
-                // Gestion d'erreur pour la première requête
-                window.location.href = "/listExamenApprenant?examen_id=" + idExamen + "&token=" + token + "&idFormation=" + idFormation;
-            } else if (error.config.url.includes('AjoutCheckExamen')) {
-                // Gestion d'erreur pour la deuxième requête
+        } catch (error) {
+            console.error(error);
+            if (error.response?.status === 400) {
                 Swal.fire({
                     icon: 'error',
                     title: 'Désolé',
-                    text: 'Vous avez déja fait cet examen',
-                    footer: '<a href=""></a>'
+                    text: 'Vous avez déjà fait cet examen.',
+                });
+            } else if (error.response?.status === 500) {
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Erreur interne',
+                    text: 'Une erreur interne est survenue.',
                 });
             }
         }
-    }
     };
+    
   
 
     return (

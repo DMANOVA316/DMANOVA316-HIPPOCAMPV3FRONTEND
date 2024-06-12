@@ -44,6 +44,7 @@ const iconStyle = {
   const [idQuestion, setDernieridQuestion] = useState('0');
 
 
+  const [timer, setTimer] = useState();
 
   useEffect(() => {
     axios.get(`/examTimer?idExamen=${idExamen}`)
@@ -58,7 +59,6 @@ const iconStyle = {
       });
   }, [idExamen]);
 
-  const [timer, setTimer] = useState(parseFloat(localStorage.getItem('timer')) || 0);
 
   useEffect(() => {
     if (timer !== null && !isNaN(timer) && timer > 0) {
@@ -78,16 +78,18 @@ const iconStyle = {
         icon: 'warning',
         title: 'Temps écoulé',
         text: 'Le temps pour passer cet examen est écoulé.',
-        //allowOutsideClick: false,
+        allowOutsideClick: false,
       }).then((result) => {
         if (result.isConfirmed) {
-          envoyerReponsesAuBackend();
+          submitAnswers();
         }
       });
     }
 
     return () => clearInterval(intervalId);
   }, [timer]);
+
+  
 
 // Fonction pour convertir la chaîne de caractères du timer en secondes
 const convertTimerToSeconds = (timerString) => {
@@ -150,9 +152,8 @@ const convertTimerToSeconds = (timerString) => {
   };
 
   
-  const envoyerReponsesAuBackend = async (e) => {
-    e.preventDefault(); // Empêcher le rechargement de la page par défaut
-  
+  const submitAnswers = async () => {
+    
     // Collecter les ID de toutes les réponses cochées
     const checkboxes = document.querySelectorAll('input[type="checkbox"]:checked');
     const idreponses = Array.from(checkboxes).map(checkbox => checkbox.value);
@@ -172,7 +173,7 @@ const convertTimerToSeconds = (timerString) => {
           text: 'Vous avez terminé votre examen',
           footer: '<a href=""></a>'
         });
-        window.location.href = "/SuivreCours?idFormation=" + idFormation + "&token=" + token;
+        window.location.href = `SuivreCours/ApprenantAdmis?idExamen=${idExamen}&token=${token}&idFormation=${idFormation}`;
       }
     } catch (error) {
       console.error(error);
@@ -184,6 +185,12 @@ const convertTimerToSeconds = (timerString) => {
       });
     }
   };
+
+  const envoyerReponsesAuBackend = (e) => {
+    e.preventDefault(); // Empêcher le rechargement de la page par défaut
+    submitAnswers();
+  };
+ 
 
   useEffect(() => {
     const initialActions = {};
@@ -214,7 +221,7 @@ const convertTimerToSeconds = (timerString) => {
       );
   
       if (response.status === 200) {
-        Swal.fire('Succès', 'Réponse soumise avec succès', 'success');
+        
         setDernieresReponses((prev) => ({
           ...prev,
           [questionId]: reponse,
@@ -248,7 +255,7 @@ const convertTimerToSeconds = (timerString) => {
       );
   
       if (response.status === 200) {
-        Swal.fire('Succès', 'Réponse mise à jour avec succès', 'success');
+        
         setDernieresReponses((prev) => ({
           ...prev,
           [questionId]: reponse,
@@ -502,7 +509,7 @@ const convertTimerToSeconds = (timerString) => {
 
          
         <button style={{backgroundColor:'#082A4D'}}
-          onClick={envoyerReponsesAuBackend}
+          onClick={(e) => envoyerReponsesAuBackend(e)}
           className="bg-green-500 text-white px-4 py-2 rounded-md">
           Terminer 
         </button>
