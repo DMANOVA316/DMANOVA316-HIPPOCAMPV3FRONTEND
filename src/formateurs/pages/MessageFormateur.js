@@ -4,6 +4,8 @@ import SockJS from 'sockjs-client';
 import { useLocation,Link} from 'react-router-dom';
 import Cookies from 'js-cookie';
 import axios from '@/api/axios';
+import NavbarAccuiel from '@/apprenants/components/NavbarAccuiel';
+import NavApprenant from '@/apprenants/components/NavApprenant';
 
 
 var stompClient =null;
@@ -169,28 +171,51 @@ const [Type, setType] = useState('2');
     const registerUser=()=>{
         connect();
     }
-    return (
-    <div className="container">
-               <p>Nom Fomateur: {Formateur.nom} {Formateur.prenom}</p>
-       <p>nom: {apprenant.nom} {apprenant.prenom} </p>
 
+    const messageStyle = {
+      listStyleType: "none",
+      padding: 0
+  };
+
+    return (
+      <>
+               <NavbarAccuiel/>
+
+<NavApprenant/>
+<br></br>
+<br></br>
+<div className="container" style={{display:'flex',justifyContent:'flex-start'}} >
+ 
         {userData.connected?
-        <div className="chat-box">
-    <div className="chat-content">
-        <ul className="chat-messages">
-            {[...ListeMessageDeux, ...privateMessages].map((message, index) => (
-                <li className={`message ${message.type === 1 ? "left" : "right"}`} key={index}>
-                    {message.type === 1 && <div className="avatar">{Formateur.nom}</div>}
-                    <div className="message-data">{message.message}</div>
-                    {message.type === 2 && <div className="avatar self">{apprenant.nom}</div>}
-                </li>
-            ))}
-        </ul>
-        <div className="send-message">
-            <input type="text" className="input-message" placeholder="enter the message" value={userData.message} onChange={handleMessage} /> 
-            <button type="button" className="send-button" onClick={sendPrivateValue}>send</button>
-        </div>
-    </div>
+           <div className="chat-box" style={{height:'50%',width:'70%',display:'flex',justifyContent:'flex-end',borderRadius:'3%'}} >
+ <div className="chat-content" style={{height:'480px',overflow:'auto',width:'100%'}}>
+ <ul style={messageStyle}>
+    {[...ListeMessageDeux, ...privateMessages].map((message, index) => (
+        <li key={index} style={{ marginBottom: "10px", display: "flex", flexDirection: message.type === 1 ? "row" : "row-reverse", alignItems: "center" }}>
+            <div style={{ width: "40px", height: "40px", borderRadius: "50%", backgroundColor: "#ddd", display: "flex", alignItems: "center", justifyContent: "center" }}>
+                {message.type === 1 ? Formateur.nom.charAt(0) : apprenant.nom.charAt(0)}
+            </div>
+            <div style={{
+                marginLeft: message.type === 1 ? "10px" : "0px",
+                marginRight: message.type === 1 ? "0px" : "10px",
+                backgroundColor: message.type === 1 ? "#ECE5DD" : "#082A4D",
+                padding: "10px",
+                borderRadius: "10px",
+                maxWidth: "80%",
+                textAlign: "left",
+                wordWrap: "break-word",
+                color:message.type === 1 ? "black" : "white"
+            }}>
+                {message.message}
+            </div>
+        </li>
+    ))}
+</ul>
+<div className="send-message" style={{marginTop: "20px", display: "flex"}}>
+    <input type="text" className="input-message" style={{ flexGrow: 1, marginRight: "10px", padding: "10px", border: "1px solid #ccc", borderRadius: "5px" }} placeholder="Type a message..." value={userData.message} onChange={handleMessage} /> 
+    <button type="button" className="send-button" style={{ padding: "10px", border: "none", borderRadius: "5px", backgroundColor: "#007bff", color: "#fff", cursor: "pointer" }} onClick={sendPrivateValue}>Send</button>
+</div>
+</div>
 
 
  
@@ -199,11 +224,12 @@ const [Type, setType] = useState('2');
         <div className="register">
         
               <button type="button" onClick={registerUser}>
-                    connect
+                    Acceder aux messages
               </button> 
         </div>}
     </div>
-    )
+    </>
+    );
 }
 
 export default ChatRoom

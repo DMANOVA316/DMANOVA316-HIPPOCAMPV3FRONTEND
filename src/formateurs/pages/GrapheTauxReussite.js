@@ -3,29 +3,29 @@ import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend } from 'chart.js';
 import Cookies from 'js-cookie';
 import axios from '@/api/axios';
+import BarNav from '../components/BarNav';
+import Navform from '../components/Navform';
 
-// Enregistrer les composants nécessaires de ChartJS
 ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
 const TauxReussiteChart = () => {
   const [data, setData] = useState([]);
   const token = Cookies.get('token');
 
-
   useEffect(() => {
-    // Effectuer une requête HTTP pour récupérer les détails de l'utilisateur et les paramètres de l'utilisateur
-    axios.get(`/tauxReussiteParFormation?token=${token}`)
-    .then(response => response.json())
-    .then(data => setData(data))
+    axios.get(`/tauxreussite?token=${token}`)
+    .then(response => {
+      setData(response.data);
+    })
     .catch(error => console.error('Erreur lors de la récupération des données:', error));
-}, []);
-  // Préparation des données pour ChartJS
+  }, [token]);
+
   const chartData = {
-    labels: data.map(item => item.nomFormation),
+    labels: data.map(item => item.titre),
     datasets: [
       {
         label: 'Taux de Réussite (%)',
-        data: data.map(item => item.tauxReussite),
+        data: data.map(item => item.tauxreussite),
         backgroundColor: 'rgba(75, 192, 192, 0.6)',
         borderColor: 'rgba(75, 192, 192, 1)',
         borderWidth: 1,
@@ -47,10 +47,16 @@ const TauxReussiteChart = () => {
   };
 
   return (
-    <div>
-      <h1>Statistiques des Formations</h1>
-      <Bar data={chartData} options={options} />
+    <>
+    <Navform/>
+<BarNav/>
+<br></br>
+<br></br>
+    <div className="bg-white dark:bg-gray-800 relative shadow-md sm:rounded-lg overflow-hidden" style={{ height: '550px' }}>
+ 
+      <Bar style={{marginLeft:'5%'}} data={chartData} options={options} />
     </div>
+    </>
   );
 };
 

@@ -16,11 +16,36 @@ import QuizAdmin from '@/admins/pages/QuizAdmin';
 import Navform from '@/formateurs/components/Navform';
 import ApprenantList from '../pages/ApprenantList';
 import Examens from '../pages/Examens';
+import BarNav from '../components/BarNav';
+
 
 
 
 const VoirListForm = () => {
+  const styles = {
+    commentaireBloc: {
+      backgroundColor: '#f5f5f5', // couleur de fond légèrement plus sombre
+      borderRadius: '8px',
+      padding: '10px',
+      marginBottom: '10px',
+      maxWidth: '600px', // ajustement de la largeur maximale du bloc de commentaire
+    },
+  }
+
+  const style = {
+    commentaireBloc: {
+      backgroundColor: '#e0e0e0', // couleur de fond légèrement plus sombre
+      borderRadius: '8px',
+      padding: '10px',
+      marginBottom: '10px',
+      maxWidth: '600px', // ajustement de la largeur maximale du bloc de commentaire
+    },
+  }
    
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('fr-FR', options);
+  }
     const [demandes, setDemandes] = useState([]);
 
     const [contentSelected, setContentSelected] = useState(null);
@@ -28,7 +53,28 @@ const VoirListForm = () => {
     const [Commentaire, setNouveauCommentaire] = useState("");
     const token = Cookies.get('token');
 
+    const NombreCommentairesInitial = 5;
 
+    const [nombreCommentairesAffiches, setNombreCommentairesAffiches] = useState(NombreCommentairesInitial);
+
+    const [reponsesForComment, setReponsesForComment] = useState([]);
+ 
+    
+    const [reponsecommentaire, setReponsecommentaire] = useState("");
+  
+    const [showReplyForm, setShowReplyForm] = useState(null);
+    const handleAfficherPlus = () => {
+      // Augmentez le nombre de commentaires affichés de 5
+      setNombreCommentairesAffiches(nombreCommentairesAffiches+10);
+    };
+    const NombreRCommentairesInitial = 5;
+    const [nombreRCommentairesAffiches, setNombreRCommentairesAffiches] = useState(NombreRCommentairesInitial);
+
+
+    const handleRAfficherPlus = () => {
+      // Augmentez le nombre de commentaires affichés de 5
+      setNombreRCommentairesAffiches(nombreRCommentairesAffiches+10);
+    };
     const location = useLocation();
     const queryParams = new URLSearchParams(location.search);
     const idFormation = queryParams.get('idFormation');
@@ -48,9 +94,13 @@ const VoirListForm = () => {
       <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
       </svg>
     },
-    { label: 'Ajouter examens', icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-      <path stroke-linecap="round" stroke-linejoin="round" d="M17.982 18.725A7.488 7.488 0 0012 15.75a7.488 7.488 0 00-5.982 2.975m11.963 0a9 9 0 10-11.963 0m11.963 0A8.966 8.966 0 0112 21a8.966 8.966 0 01-5.982-2.275M15 9.75a3 3 0 11-6 0 3 3 0 016 0z" />
-      </svg>
+    { label: 'Ajouter examens', icon:  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="24" height="24" fill="none" stroke="currentColor" stroke-width="1.5">
+  
+      <path stroke-linecap="round" stroke-linejoin="round" d="M17 2H7a2 2 0 00-2 2v16a2 2 0 002 2h10a2 2 0 002-2V4a2 2 0 00-2-2z"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M7 6h10M7 10h10M7 14h7"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M20 22l-2-2 2-2 2 2-2 2zM16 6l4 4"/>
+      <path stroke-linecap="round" stroke-linejoin="round" d="M16 6l-1.5-1.5a2 2 0 112.828-2.828L18 4"/>
+    </svg>
     },
     
     ];
@@ -81,6 +131,27 @@ const VoirListForm = () => {
             console.error('Erreur lors de la récupération des commentaires :', error);
           });
       }, []);
+      useEffect(() => {
+        axios.get(`/LesReponsesCommentaires?idCommentaire=${showReplyForm}`)
+          .then((response) => {
+            setReponsesForComment(response.data);
+          })
+          .catch((error) => {
+            console.error('Erreur lors de la récupération des commentaires :', error);
+          });
+      }, [showReplyForm]); // Exécuter chaque fois que showReplyForm change
+    
+      useEffect(() => {
+        const storedReplyForm = localStorage.getItem('showReplyForm');
+        if (storedReplyForm) {
+          setShowReplyForm(parseInt(storedReplyForm));
+        }
+      }, []); // Exécuter une seule fois au montage
+    
+      const handleReplyButtonClick = (idCommentaire) => {
+        setShowReplyForm(idCommentaire);
+        localStorage.setItem('showReplyForm', idCommentaire);
+      };
       
 
      
@@ -110,11 +181,33 @@ const VoirListForm = () => {
      
     }
   };
+  const handleCommentReponseSubmit = async (e,idCommentaire) => {
+    e.preventDefault();
+  
+    try {
+      if (idCommentaire && reponsecommentaire && token) {
+        const response = await axios.post(`/AjoutReponseCommentaireFormateur?idCommentaire=${idCommentaire}&reponsecommentaire=${reponsecommentaire}&token=${token}`);
+     // Traiter la réponse ou rafraîchir la liste des commentaires, etc.
+        console.log(response.data);
+  
+        
+        // Effacer le contenu du commentaire après l'envoi
+        setReponsecommentaire("");
+        window.location.reload();
+        
+              
+      }
+    } catch (error) {
+     
+    }
+  };
 
 
     return (
         <>
         <Navform/>
+<BarNav/>
+
 
         <main className="p-4 md:ml-4 h-auto pt-30">
         <section className="bg-gray-100 dark:bg-gray-900 p-3 sm:p-5">
@@ -295,61 +388,117 @@ const VoirListForm = () => {
 
             </div>
         </section>
-        <div>
-      {/* Votre contenu JSX existant */}
-      
-      {/* Affichage des commentaires */}
-      <h2 style={{ color: 'navy', textAlign: 'center', fontWeight: 'bold' }}>COMMENTAIRES :</h2>
+        
+
+    <div className="flex flex-wrap" style={{marginLeft:'5%'}} >
+  {/* Section des commentaires à droite */}
+  <div className="flex-grow">
+    <div>
+      <h2 style={{ color: '#082A4D', fontWeight: 'bold',marginLeft:'5%' }}>COMMENTAIRES :</h2>
+      <br></br>
       <ul className="text-left ml-10">
-        {commentaires.map((commentaire) => (
-
-         <li key={commentaire.idcommentaire}>
-          {commentaire.nomFormateur && commentaire.prenomFormateur && (
-  <strong>{commentaire.nomFormateur} {commentaire.prenomFormateur}</strong>
-  
-)}
- {commentaire.nomApprenant && commentaire.prenomApprenant && (
-  <strong>{commentaire.nomApprenant} {commentaire.prenomApprenant}</strong>
-  
-  
-)}
-          <br></br>
+        {commentaires.slice(0, nombreCommentairesAffiches).map((commentaire) => (
+          <li key={commentaire.idcommentaire} style={styles.commentaireBloc}>
+            {commentaire.nomFormateur && commentaire.prenomFormateur && (
+              <strong style={{ color: '#082A4D' }}>
+                {commentaire.nomFormateur} {commentaire.prenomFormateur}
+              </strong>
+            )}
+            {commentaire.nomApprenant && commentaire.prenomApprenant && (
+              <strong style={{ color: '#082A4D' }}>
+                {commentaire.nomApprenant} {commentaire.prenomApprenant}
+              </strong>
+            )}
+            <br />
             {commentaire.commentaire}
-            <br></br>
-            <br></br>
-            {commentaire.datecommentaire} 
+            <br />
+            <br />
+            {formatDate(commentaire.datecommentaire)}
+            <br />
+            
+            <button onClick={() => handleReplyButtonClick(commentaire.idCommentaire)}>Répondre commentaire</button>
+            {showReplyForm === commentaire.idCommentaire && (
+      <form onSubmit={(e) => handleCommentReponseSubmit(e, commentaire.idCommentaire)}>
+         
+         <div>
+      <ul className="text-left ml-10">
+        {reponsesForComment.slice(0, nombreRCommentairesAffiches).map((commentaire) => (
+          <li key={commentaire.idCommentaire} style={style.commentaireBloc}>
+            {commentaire.nomFormateur && commentaire.prenomFormateur && (
+              <strong style={{ color: '#082A4D' }}>{commentaire.nomFormateur} {commentaire.prenomFormateur}</strong>
+            )}
+            {commentaire.nomApprenant && commentaire.prenomApprenant && (
+              <strong style={{ color: '#082A4D' }}>{commentaire.nomApprenant} {commentaire.prenomApprenant}</strong>
+            )}
 
-            <br></br>
-
-            <button
-  type="submit"
-  className="px-4 py-2 bg-gray-300 text-gray-700 rounded-md text-sm"
->
-  <Link to={`/reponsecommentaireform?idCommentaire=${commentaire.idCommentaire}`}>
-    Répondre
-  </Link>
-</button>
-
+            <br />
+            {commentaire.reponsecommentaire}
+            <br />
+            {formatDate(commentaire.datereponsecommentaire)}
+            <br />
           </li>
         ))}
+        {reponsesForComment.length > nombreRCommentairesAffiches && (
+        <button onClick={handleRAfficherPlus} style={{ fontWeight: 'bold' }}>
+          Afficher plus de Reponses...
+        </button>
+      )}
       </ul>
-    </div>
-    <form onSubmit={handleCommentSubmit} className="flex flex-col items-center mt-6">
+    </div> 
+    
+            
+          
         <textarea
-          id="commentaire"
-          name="Commentaire"
-          value={Commentaire}
-          onChange={(e) => setNouveauCommentaire(e.target.value)}
+          id={`reponsecommentaire-${commentaire.idCommentaire}`}
+          name="reponsecommentaire"
+          value={reponsecommentaire}
+          onChange={(e) => setReponsecommentaire(e.target.value)}
           className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-2"
-          placeholder="Saisissez votre commentaire..."
+          placeholder="Saisissez votre réponse..."
         />
-        {/* Ajout du champ hidden pour stocker l'idFormation en cours */}
-        <input type="hidden" name="idFormation" value={idFormation} />
-        <button type="submit" className="px-8 py-2 bg-blue-500 text-white rounded-md">
-          Ajouter votre commentaire
+        <button style={{backgroundColor:'#0096BB',color:'white'}} type="submit" className="px-8 py-2 bg-blue-500 text-white rounded-md">
+          Répondre
         </button>
       </form>
+      
+      
 
+    )}
+    
+           </li>
+        ))}
+      </ul>
+      <br />
+      
+      {commentaires.length > nombreCommentairesAffiches && (
+        <button onClick={handleAfficherPlus} style={{ fontWeight: 'bold' }}>
+          Afficher plus de commentaires...
+        </button>
+      )}
+    </div>
+
+    {/* Formulaire de commentaire en bas */}
+    <form onSubmit={handleCommentSubmit} className="flex flex-col items-center mt-6">
+      <textarea
+        id="commentaire"
+        name="Commentaire"
+        value={Commentaire}
+        onChange={(e) => setNouveauCommentaire(e.target.value)}
+
+
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-2"
+        placeholder="Saisissez votre commentaire..."
+      />
+      <input type="hidden" name="idFormation" value={idFormation} />
+      <button style={{backgroundColor:'#0096BB',color:'white'}} type="submit" className="px-8 py-2 bg-blue-500 text-white rounded-md">
+        Ajouter votre commentaire
+      </button>
+    </form>
+  </div>
+
+ 
+   
+</div>
     
     </main>
 

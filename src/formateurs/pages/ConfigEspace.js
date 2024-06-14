@@ -78,7 +78,7 @@ const handleSubmit = async (e) => {
                         
                       <div>
                         <Label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white" htmlFor="phrase"
-                                    value="phrase"/>
+                                    value="Nom Espace"/>
                          <TextInput id="phrase" type="text" placeholder="Veuillez remplir..." required value={nomespace} 
                          onChange={(e) => setPhrase(e.target.value)} className='resize-none border rounded-md p-6'/>
 

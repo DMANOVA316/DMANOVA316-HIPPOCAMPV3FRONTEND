@@ -11,8 +11,10 @@ import Swal from 'sweetalert2';
 import BarNav from '../components/BarNav';
 import Navform from '../components/Navform';
 import Cookies from 'js-cookie';
+import { Pie } from 'react-chartjs-2';
+import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 
-
+ChartJS.register(ArcElement, Tooltip, Legend);
 
 const ApprenantList = () => {
       
@@ -24,8 +26,10 @@ const ApprenantList = () => {
   const [nomFormation, setNomFormation] = useState([]);
 
   const [noteTotal, setNoteTotal] = useState();
-  const [pourcentage, setPourcentage] = useState();
-
+  const [pourcentage, setPourcentage] = useState([]);
+  const [chartData, setChartData] = useState({
+    datasets: [], // Initialisation avec un objet de données vide
+  });
 
 useEffect(() => {
   // Effectuer une requête HTTP pour récupérer les détails de l'utilisateur et les paramètres de l'utilisateur
@@ -39,17 +43,31 @@ useEffect(() => {
 }, []);
 
 useEffect(() => {
-    // Effectuer une requête HTTP pour récupérer les détails de l'utilisateur et les paramètres de l'utilisateur
-    axios.get(`/pourcentage?idFormation=${idFormation}&idExamen=${idExamen}`)
-      .then((response) => {
-        // Ajoutez un console.log pour afficher les données récupérées depuis le serveur
-        console.log("Données des examens récupérées avec succès :", response.data);
-        setPourcentage(response.data);
-      })
-      .catch((error) => {
-        console.error('Erreur lors de la récupération des examens :', error);
-      });
-  }, []);
+  axios.get(`/pourcentage?idFormation=${idFormation}&idExamen=${idExamen}`)
+    .then((response) => {
+      setPourcentage(response.data);
+
+      console.log("Données des examens récupérées avec succès :", response.data);
+      
+      const newData = {
+        labels: ['% Admis', '% Non Admis'],
+        datasets: [
+          {
+            data: [response.data[0].pourcentageAdmis , response.data[0].pourcentageNonAdmis],
+            backgroundColor: ['rgba(54, 162, 235, 0.6)', 'rgba(255, 99, 132, 0.6)'],
+            borderColor: ['rgba(54, 162, 235, 1)', 'rgba(255, 99, 132, 1)'],
+            borderWidth: 1,
+          },
+        ],
+      };
+
+      setChartData(newData); // Utilisez le setChartData si vous faites le state pour chartData
+    })
+    .catch((error) => {
+      console.error('Erreur lors de la récupération des examens :', error);
+    });
+}, [idFormation, idExamen]);
+
 
   useEffect(() => {
     // Effectuer une requête HTTP pour récupérer les détails de l'utilisateur et les paramètres de l'utilisateur
@@ -90,14 +108,38 @@ useEffect(() => {
 
     <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-2">
         <div className="mx-auto max-w-screen-xl px-4 lg:px-2">
-        <div className="flex items-center justify-start h-full mb-6">
-      <div className="bg-white rounded-lg shadow-lg p-6 flex items-center space-x-4">
+        <div  className="flex items-center justify-start h-full mb-6">
+      <div  className="bg-white rounded-lg shadow-lg p-6 flex items-center space-x-4">
         {nomFormation.map(demande => (
         <div>
-          <p className="text-gray-600 font-bold">Lise des admis sur la formation {demande.titre}</p>
-          <p className="text-gray-600 font-bold"> {pourcentage} %</p>
+          <p className="text-gray-600 font-bold">Liste des admis sur la formation " {demande.titre} "</p>
+          
+          {pourcentage.map(pourcentages => (
+            <ul className="">
+                                <li className="px-4 py-3">Total inscrit : {pourcentages.totalinscrits}</li>
+                                <li className="px-4 py-3">Nombre admis : {pourcentages.admis}  ({(pourcentages.pourcentageAdmis).toFixed(2)} %)</li>
+                                <li className="px-4 py-3">Nombre Non admis : {pourcentages.nonadmis}  ({(pourcentages.pourcentageNonAdmis).toFixed(2)}%)</li>
+     
+                        </ul>
+        ))}  
+        
         </div>
                         ))}
+
+
+      </div>
+    </div>
+     <div style={{ display:'flex',justifyContent: 'flex-end',marginTop:'-25%' }} className="flex items-center justify-start h-full mb-6">
+      
+      <div className="bg-white rounded-lg shadow-lg p-6 flex items-center space-x-4">
+        
+      <div style={{ width: '250px', height: '260px' }}>
+      <p className="text-gray-600 font-bold">Répresentation graphique : </p>
+
+      {chartData && chartData.datasets.length > 0 && (
+        <Pie data={chartData}  />
+      )}
+    </div>
 
       </div>
     </div>

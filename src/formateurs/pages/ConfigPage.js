@@ -353,8 +353,8 @@ const [userDetailsResponse, setUserDetailsResponse] = useState(null);
     Mettre à jour
   </button>
 
-  <Link 
-  to={`/SiteFormateur?nomespace=${nomespace}`}> 
+  <Link target="_blank" rel="noopener noreferrer"
+  to={`/MonSite?nomespace=${nomespace}`}> 
 
     voir page
   </Link>

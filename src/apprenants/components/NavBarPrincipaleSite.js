@@ -83,7 +83,7 @@ const NavbarAccuiel = () => {
                     <div className="flex items-center">
                       <div className="flex-shrink-0">
 
-                      <Link to={`/SiteFormateur?nomespace=${nomespace}`} class="flex items-center">
+                      <Link to={`/MonSite?nomespace=${nomespace}`} class="flex items-center">
 
                 <img src={`http://localhost:8080/${logo}`} className="mr-3 h-8 w-18 sm:h-9" alt="Flowbite Logo" style={style} />
             </Link>
@@ -177,7 +177,7 @@ const NavbarAccuiel = () => {
             )}
           </Disclosure>
             </div>
-             
+
           </div>
 
     );

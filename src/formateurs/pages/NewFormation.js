@@ -21,13 +21,13 @@ import Swal from 'sweetalert2';
 
 const NewFormation = () => {
 
-const [categorie, setCategorie] = useState('1');
+const [categorie, setCategorie] = useState();
 const [titre, setTitre] = useState('');
 const [duree, setDuree] = useState('1');
 const [unite, setUnite] = useState('1');
 const [typesAcces, setTypesAcces] = useState('1');
 const [prix, setPrix] = useState('0');
-const [langue, setLangue] = useState('1');
+const [langue, setLangue] = useState();
 
 const [etatPublication, setetatPublication] = useState('1');
 
@@ -35,6 +35,17 @@ const [etatPublication, setetatPublication] = useState('1');
 const [photo, setPhoto] = useState();
 
 // const [isPayant, setIsPayant] = useState(false); // État pour déterminer si l'accès est payant
+
+function handCategorie(event) {
+  
+  setCategorie(event.target.value);
+}
+
+function handLangue(event) {
+  
+  setLangue(event.target.value);
+}
+
 
 function handleImage(event) {
   
@@ -164,7 +175,9 @@ const handlesetetatPublication = (e) => {
                              rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 
                              dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
                              dark:focus:ring-primary-500 dark:focus:border-primary-500" value={categorie} 
-                             onChange={(e) => setCategorie(e.target.value)}>
+                             
+                             onChange={handCategorie}>
+                              <option >Categorie</option>
                              {userDetailsResponse.allCategorie.map((categorie) => (
                                  <option key={categorie.idCategorie} value={categorie.idCategorie}>{categorie.nom}</option>
                                 ))}
@@ -244,7 +257,9 @@ const handlesetetatPublication = (e) => {
                         rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 
                         dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white 
                         dark:focus:ring-primary-500 dark:focus:border-primary-500" value={langue} 
-                        onChange={(e) => setLangue(e.target.value)}>
+                        onChange={handLangue}>
+                              <option >Langues</option>
+
                         {userDetailsResponse.allLangues.map((langue) => (
                          <option key={langue.idLangues} value={langue.idLangues}>{langue.nom}</option>
                         ))}

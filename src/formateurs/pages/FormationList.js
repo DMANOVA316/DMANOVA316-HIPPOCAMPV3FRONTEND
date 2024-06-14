@@ -23,7 +23,10 @@ const FormationList = () => {
 
       
 
-
+  function formatDate(dateString) {
+    const options = { year: 'numeric', month: 'long', day: 'numeric' };
+    return new Date(dateString).toLocaleDateString('fr-FR', options);
+  }
     const token = Cookies.get('token');
 
     const [demandes, setDemandes] = useState([]);
@@ -121,52 +124,32 @@ const FormationList = () => {
       </div>
     </div>
 
-          <div className="relative overflow-x-auto shadow-md sm:rounded-lg"  style={{ width: "110%", marginLeft: "-55px" }}>
 
-          <Table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-900">
-              <Table.Head className="whitespace-nowrap font-medium text-gray-900 dark:text-white">
-                <Table.HeadCell>
-                  Date validation
-                </Table.HeadCell>
+    <div className="relative overflow-x-auto shadow-md sm:rounded-lg"  style={{ width:'100%',display:'flex',justifyContent: 'flex-end' }}>
 
-                <Table.HeadCell>
-             Nombre d'Apprenant
-                </Table.HeadCell>
+<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+              <thead className="text-xs text-white uppercase bg-blue-700 dark:bg-gray-700 dark:text-gray-400">
+                  <tr>
+                      <th scope="col" className="px-4 py-3">Date validation</th>
+                      <th scope="col" className="px-4 py-3">Nombre d'Apprenant</th>
+                      <th scope="col" className="px-4 py-3">Catégorie</th>
+                      <th scope="col" className="px-4 py-3">Titre</th>
+                      <th scope="col" className="px-4 py-3">Type Acces</th>
+                      <th scope="col" className="px-4 py-3">Prix</th>
+                      <th scope="col" className="px-4 py-3">Actions</th>
 
-                <Table.HeadCell>
-                  Catégorie
-                </Table.HeadCell>
-
-                <Table.HeadCell>
-                  Titre
-                </Table.HeadCell>
-
-                <Table.HeadCell>
-                  Type Acces
-                </Table.HeadCell>
-
-                <Table.HeadCell>
-                  Actions
-                </Table.HeadCell>
- 
-             
-
-              </Table.Head>
-              <Table.Body className="divide-y">
+                  </tr>
+              </thead>
+              <tbody>
               {demandes.map(demande => (
-               
-     
-                <Table.Row className="bg-white dark:border-gray-900 dark:bg-gray-800">
-                  <Table.Cell>{demande.devalidation}</Table.Cell>
-                  <Table.Cell>{demande.totalEleve}</Table.Cell>
-                  <Table.Cell>{demande.nomCategorie}</Table.Cell>
-                  <Table.Cell>{demande.titre}</Table.Cell>
-                  <Table.Cell>{demande.nomTypesAcces}</Table.Cell>
-                
-
-                  
-                  <Table.Cell className="flex items-center space-x-2">
-                  {demande.etat === 1 && (
+                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                      <td className="px-4 py-3">{formatDate(demande.devalidation)}</td>
+                      <td className="px-4 py-3">{demande.totalEleve}</td>
+                      <td className="px-4 py-3">{demande.nomCategorie}</td>
+                      <td className="px-4 py-3">{demande.titre}</td>
+                      <td className="px-4 py-3">{demande.nomTypesAcces}</td>
+                      <td className="px-4 py-3">{demande.prix.toLocaleString('fr-FR')} Ar</td>
+                      <td className="px-4 py-3">{demande.etat === 1 && (
                     <>
                       <Link
                         className="font-medium text-cyan-600 hover:underline dark:text-cyan-500 mt-4"
@@ -258,17 +241,16 @@ const FormationList = () => {
                         </span>
                       </button>
                     </>
-                  )}
-                </Table.Cell>
+                  )}</td>
+ 
+                  </tr>
+              ))}
 
-                </Table.Row>
-                ))}
-
-
-              </Table.Body>
-            </Table>
-          
-          </div>
+              </tbody>
+          </table>
+ 
+</div>
+ 
        
             </>
     );

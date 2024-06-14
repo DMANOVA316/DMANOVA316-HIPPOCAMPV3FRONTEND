@@ -8,6 +8,7 @@ import axios from '@/api/axios';
 import { useLocation, Link} from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
+import Cookies from 'js-cookie';
 
 import Zoom from '../pages/Zoom';
 import DetailZoom from '../pages/DetailZoom';
@@ -16,10 +17,64 @@ import Quiz from '../pages/Quiz';
 import Examens from '../pages/Examens';
 import ApprenantList from '../pages/ApprenantList';
 import Navform from '../components/Navform';
+import BarNav from '../components/BarNav';
 
 
 const Detailform = () => {
    
+    const styles = {
+        commentaireBloc: {
+          backgroundColor: '#f5f5f5', // couleur de fond légèrement plus sombre
+          borderRadius: '8px',
+          padding: '10px',
+          marginBottom: '10px',
+          maxWidth: '600px', // ajustement de la largeur maximale du bloc de commentaire
+        },
+      }
+    
+      const style = {
+        commentaireBloc: {
+          backgroundColor: '#e0e0e0', // couleur de fond légèrement plus sombre
+          borderRadius: '8px',
+          padding: '10px',
+          marginBottom: '10px',
+          maxWidth: '600px', // ajustement de la largeur maximale du bloc de commentaire
+        },
+      }
+       
+      function formatDate(dateString) {
+        const options = { year: 'numeric', month: 'long', day: 'numeric' };
+        return new Date(dateString).toLocaleDateString('fr-FR', options);
+      }
+ 
+     
+        const [commentaires, setCommentaires] = useState([]);
+        const [Commentaire, setNouveauCommentaire] = useState("");
+        const token = Cookies.get('token');
+    
+        const NombreCommentairesInitial = 5;
+    
+        const [nombreCommentairesAffiches, setNombreCommentairesAffiches] = useState(NombreCommentairesInitial);
+    
+        const [reponsesForComment, setReponsesForComment] = useState([]);
+     
+        
+        const [reponsecommentaire, setReponsecommentaire] = useState("");
+      
+        const [showReplyForm, setShowReplyForm] = useState(null);
+        const handleAfficherPlus = () => {
+          // Augmentez le nombre de commentaires affichés de 5
+          setNombreCommentairesAffiches(nombreCommentairesAffiches+10);
+        };
+        const NombreRCommentairesInitial = 5;
+        const [nombreRCommentairesAffiches, setNombreRCommentairesAffiches] = useState(NombreRCommentairesInitial);
+    
+    
+        const handleRAfficherPlus = () => {
+          // Augmentez le nombre de commentaires affichés de 5
+          setNombreRCommentairesAffiches(nombreRCommentairesAffiches+10);
+        };
+         
      
 
     const [demandes, setDemandes] = useState([]);
@@ -70,8 +125,77 @@ const Detailform = () => {
           .catch((error) => {
             console.error('Erreur lors de la récupération des détails de l\'utilisateur :', error);
           });
+          axios.get(`/LesCommentaires?idFormation=${idFormation}`)
+          .then((response) => {
+            setCommentaires(response.data);
+          })
+          .catch((error) => {
+            console.error('Erreur lors de la récupération des commentaires :', error);
+          });
       }, []);
+      useEffect(() => {
+        axios.get(`/LesReponsesCommentaires?idCommentaire=${showReplyForm}`)
+          .then((response) => {
+            setReponsesForComment(response.data);
+          })
+          .catch((error) => {
+            console.error('Erreur lors de la récupération des commentaires :', error);
+          });
+      }, [showReplyForm]); // Exécuter chaque fois que showReplyForm change
+    
+      useEffect(() => {
+        const storedReplyForm = localStorage.getItem('showReplyForm');
+        if (storedReplyForm) {
+          setShowReplyForm(parseInt(storedReplyForm));
+        }
+      }, []); // Exécuter une seule fois au montage
+    
+      const handleReplyButtonClick = (idCommentaire) => {
+        setShowReplyForm(idCommentaire);
+        localStorage.setItem('showReplyForm', idCommentaire);
+      };
       
+        // Fonction pour gérer l'envoi du commentaire
+        const handleCommentSubmit = async (e) => {
+            e.preventDefault();
+          
+            try {
+              if (idFormation && Commentaire && token) {
+                const response = await axios.post(`/AjoutCommentaireFormateur?idFormation=${idFormation}&Commentaire=${Commentaire}&token=${token}`);
+             // Traiter la réponse ou rafraîchir la liste des commentaires, etc.
+                console.log(response.data);
+          
+                
+                // Effacer le contenu du commentaire après l'envoi
+                setNouveauCommentaire("");
+                window.location.reload();
+            
+              }
+            } catch (error) {
+             
+            }
+          };
+          const handleCommentReponseSubmit = async (e,idCommentaire) => {
+            e.preventDefault();
+          
+            try {
+              if (idCommentaire && reponsecommentaire && token) {
+                const response = await axios.post(`/AjoutReponseCommentaireFormateur?idCommentaire=${idCommentaire}&reponsecommentaire=${reponsecommentaire}&token=${token}`);
+             // Traiter la réponse ou rafraîchir la liste des commentaires, etc.
+                console.log(response.data);
+          
+                
+                // Effacer le contenu du commentaire après l'envoi
+                setReponsecommentaire("");
+                window.location.reload();
+                
+                      
+              }
+            } catch (error) {
+             
+            }
+          };
+              
 
      
         const [selectedZoom, setSelectedZoom] = useState(null);
@@ -86,6 +210,7 @@ const Detailform = () => {
     return (
         <>
         <Navform/>
+<BarNav/>
         <main className="p-4 md:ml-4 h-auto pt-30">
         <section className="bg-gray-100 dark:bg-gray-900 p-3 sm:p-5">
             <div className="mx-auto max-w-screen-xl px-4 lg:px-12">
@@ -259,6 +384,115 @@ const Detailform = () => {
                 </nav>
             </div>
         </div>
+        <div className="flex flex-wrap" style={{marginLeft:'5%'}} >
+  {/* Section des commentaires à droite */}
+  <div className="flex-grow">
+    <div>
+      <h2 style={{ color: '#082A4D', fontWeight: 'bold',marginLeft:'5%' }}>COMMENTAIRES :</h2>
+      <br></br>
+      <ul className="text-left ml-10">
+        {commentaires.slice(0, nombreCommentairesAffiches).map((commentaire) => (
+          <li key={commentaire.idcommentaire} style={styles.commentaireBloc}>
+            {commentaire.nomFormateur && commentaire.prenomFormateur && (
+              <strong style={{ color: '#082A4D' }}>
+                {commentaire.nomFormateur} {commentaire.prenomFormateur}
+              </strong>
+            )}
+            {commentaire.nomApprenant && commentaire.prenomApprenant && (
+              <strong style={{ color: '#082A4D' }}>
+                {commentaire.nomApprenant} {commentaire.prenomApprenant}
+              </strong>
+            )}
+            <br />
+            {commentaire.commentaire}
+            <br />
+            <br />
+            {formatDate(commentaire.datecommentaire)}
+            <br />
+            
+            <button onClick={() => handleReplyButtonClick(commentaire.idCommentaire)}>Répondre commentaire</button>
+            {showReplyForm === commentaire.idCommentaire && (
+      <form onSubmit={(e) => handleCommentReponseSubmit(e, commentaire.idCommentaire)}>
+         
+         <div>
+      <ul className="text-left ml-10">
+        {reponsesForComment.slice(0, nombreRCommentairesAffiches).map((commentaire) => (
+          <li key={commentaire.idCommentaire} style={style.commentaireBloc}>
+            {commentaire.nomFormateur && commentaire.prenomFormateur && (
+              <strong style={{ color: '#082A4D' }}>{commentaire.nomFormateur} {commentaire.prenomFormateur}</strong>
+            )}
+            {commentaire.nomApprenant && commentaire.prenomApprenant && (
+              <strong style={{ color: '#082A4D' }}>{commentaire.nomApprenant} {commentaire.prenomApprenant}</strong>
+            )}
+
+            <br />
+            {commentaire.reponsecommentaire}
+            <br />
+            {formatDate(commentaire.datereponsecommentaire)}
+            <br />
+          </li>
+        ))}
+        {reponsesForComment.length > nombreRCommentairesAffiches && (
+        <button onClick={handleRAfficherPlus} style={{ fontWeight: 'bold' }}>
+          Afficher plus de Reponses...
+        </button>
+      )}
+      </ul>
+    </div> 
+    
+            
+          
+        <textarea
+          id={`reponsecommentaire-${commentaire.idCommentaire}`}
+          name="reponsecommentaire"
+          value={reponsecommentaire}
+          onChange={(e) => setReponsecommentaire(e.target.value)}
+          className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-2"
+          placeholder="Saisissez votre réponse..."
+        />
+        <button style={{backgroundColor:'#0096BB',color:'white'}} type="submit" className="px-8 py-2 bg-blue-500 text-white rounded-md">
+          Répondre
+        </button>
+      </form>
+      
+      
+
+    )}
+    
+           </li>
+        ))}
+      </ul>
+      <br />
+      
+      {commentaires.length > nombreCommentairesAffiches && (
+        <button onClick={handleAfficherPlus} style={{ fontWeight: 'bold' }}>
+          Afficher plus de commentaires...
+        </button>
+      )}
+    </div>
+
+    {/* Formulaire de commentaire en bas */}
+    <form onSubmit={handleCommentSubmit} className="flex flex-col items-center mt-6">
+      <textarea
+        id="commentaire"
+        name="Commentaire"
+        value={Commentaire}
+        onChange={(e) => setNouveauCommentaire(e.target.value)}
+
+
+        className="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:border-blue-500 mb-2"
+        placeholder="Saisissez votre commentaire..."
+      />
+      <input type="hidden" name="idFormation" value={idFormation} />
+      <button style={{backgroundColor:'#0096BB',color:'white'}} type="submit" className="px-8 py-2 bg-blue-500 text-white rounded-md">
+        Ajouter votre commentaire
+      </button>
+    </form>
+  </div>
+
+ 
+   
+</div>
     </section>
 </main>
 
