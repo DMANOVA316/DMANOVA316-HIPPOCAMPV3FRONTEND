@@ -99,7 +99,7 @@ const [Type, setType] = useState('2');
     }, [userData]);
 
     const connect =()=>{
-        let Sock = new SockJS('http://localhost:8080/ws');
+        let Sock = new SockJS('http://ec2-52-40-245-130.us-west-2.compute.amazonaws.com:9090/ws');
         stompClient = over(Sock);
         stompClient.connect({},onConnected, onError);
     }

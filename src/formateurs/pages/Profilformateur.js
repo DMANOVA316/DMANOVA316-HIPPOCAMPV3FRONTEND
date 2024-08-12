@@ -185,7 +185,7 @@ const Profilformateur = () => {
   <div className="md:w lg:w- mx-auto px-4 py-4" style={{marginLeft:'-5%'}}>
     {demandes.pdp && (
       <img
-      src={`http://localhost:8080/${demandes.pdc}`}
+      src={`http://ec2-52-40-245-130.us-west-2.compute.amazonaws.com:9090/${demandes.pdc}`}
         alt="personne"
         className="w-full h-64 object-cover rounded-t-lg"
       />
@@ -196,7 +196,7 @@ const Profilformateur = () => {
     width: '200px', // Ajustez la taille du cercle selon vos besoins
     height: '200px',
     borderRadius: '50%', // Fait du div un cercle
-    backgroundImage: `url(http://localhost:8080/${demandes.pdp})`, // Chemin de l'image de profil
+    backgroundImage: `url(http://ec2-52-40-245-130.us-west-2.compute.amazonaws.com:9090/${demandes.pdp})`, // Chemin de l'image de profil
     backgroundPosition: 'center', // Centre l'image dans le cercle
     backgroundSize: 'contain', // Ajuste la taille de l'image pour qu'elle couvre tout le conteneur
     backgroundSize: 'cover', // Ajuste la taille de l'image pour qu'elle couvre tout le conteneur
@@ -339,7 +339,7 @@ const Profilformateur = () => {
   <div className="md:w lg:w- mx-auto px-4 py-4" style={{marginLeft:'-18%'}}>
     {demandes.pdp && (
       <img 
-      src={`http://localhost:8080/${demandes.pdc}`}
+      src={`http://ec2-52-40-245-130.us-west-2.compute.amazonaws.com:9090/${demandes.pdc}`}
         alt="personne"
         className="w-full h-64 object-cover rounded-t-lg"
       />
@@ -355,7 +355,7 @@ const Profilformateur = () => {
     width: '200px', // Ajustez la taille du cercle selon vos besoins
     height: '200px',
     borderRadius: '50%', // Fait du div un cercle
-    backgroundImage: `url(http://localhost:8080/${demandes.pdp})`, // Chemin de l'image de profil
+    backgroundImage: `url(http://ec2-52-40-245-130.us-west-2.compute.amazonaws.com:9090/${demandes.pdp})`, // Chemin de l'image de profil
     backgroundPosition: 'center', // Centre l'image dans le cercle
     backgroundSize: 'contain', // Ajuste la taille de l'image pour qu'elle couvre tout le conteneur
     backgroundSize: 'cover', // Ajuste la taille de l'image pour qu'elle couvre tout le conteneur
@@ -505,7 +505,7 @@ const Profilformateur = () => {
   <div className="md:w lg:w- mx-auto px-4 py-4" style={{marginLeft:'-18%'}}>
     {demandes.pdp && (
       <img 
-      src={`http://localhost:8080/${demandes.pdc}`}
+      src={`http://ec2-52-40-245-130.us-west-2.compute.amazonaws.com:9090/${demandes.pdc}`}
         alt="personne"
         className="w-full h-64 object-cover rounded-t-lg"
       />
@@ -518,7 +518,7 @@ const Profilformateur = () => {
     width: '200px', // Ajustez la taille du cercle selon vos besoins
     height: '200px',
     borderRadius: '50%', // Fait du div un cercle
-    backgroundImage: `url(http://localhost:8080/${demandes.pdp})`, // Chemin de l'image de profil
+    backgroundImage: `url(http://ec2-52-40-245-130.us-west-2.compute.amazonaws.com:9090/${demandes.pdp})`, // Chemin de l'image de profil
     backgroundPosition: 'center', // Centre l'image dans le cercle
     backgroundSize: 'contain', // Ajuste la taille de l'image pour qu'elle couvre tout le conteneur
     backgroundSize: 'cover', // Ajuste la taille de l'image pour qu'elle couvre tout le conteneur

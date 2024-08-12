@@ -39,7 +39,7 @@ const NavbarAccuiel = () => {
                       <div className="flex-shrink-0">
 
                       <Link to="/landingpage" ><FontAwesomeIcon icon={faEnvelope} /> : hippocamp@gmail.com</Link>
-                      <Link to="/listeFormationacceuil" className="mx-4" > <FontAwesomeIcon icon={faPhone}/> : 032 36 452 17</Link>
+                      <Link to="/listeFormationacceuil" className="mx-4" > <FontAwesomeIcon icon={faPhone}/> : 038 96 555 44</Link>
 
                       </div>
                       

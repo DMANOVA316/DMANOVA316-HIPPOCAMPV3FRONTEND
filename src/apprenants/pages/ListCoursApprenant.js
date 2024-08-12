@@ -502,7 +502,7 @@ const [contentSelectedWeb, setContentSelectedWeb] = useState('webinar'); // Déf
                                         <div className="bg-white border border-gray-300 rounded-lg p-1">
                                         <Link to={`/profilformateur?tokenform=${demandes.monFormateur?.token}&tokenAp=${token}`} target="_blank" rel="noopener noreferrer">
                                           <img
-                                            src={`http://localhost:8080/${demandes?.monFormateur?.pdp}`}
+                                            src={`http://ec2-52-40-245-130.us-west-2.compute.amazonaws.com:9090/${demandes?.monFormateur?.pdp}`}
                                             alt="Avatar"
                                             className="w-20 h-20 rounded-full object-cover"
                                           />

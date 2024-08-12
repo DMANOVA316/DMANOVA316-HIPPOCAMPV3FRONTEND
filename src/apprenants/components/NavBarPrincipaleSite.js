@@ -85,7 +85,7 @@ const NavbarAccuiel = () => {
 
                       <Link to={`/MonSite?nomespace=${nomespace}`} class="flex items-center">
 
-                <img src={`http://localhost:8080/${logo}`} className="mr-3 h-8 w-18 sm:h-9" alt="Flowbite Logo" style={style} />
+                <img src={`http://ec2-52-40-245-130.us-west-2.compute.amazonaws.com:9090/${logo}`} className="mr-3 h-8 w-18 sm:h-9" alt="Flowbite Logo" style={style} />
             </Link>
 
                       </div>

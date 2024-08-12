@@ -300,7 +300,7 @@ const Head = () => {
           {publicites.map((pub) => (
             <div key={pub.id}>
               <Link  to={pub.lien} target="_blank" rel="noopener noreferrer">
-              <img src={`http://localhost:8080/${pub.sary}`} alt={pub.sary} style={style}/>
+              <img src={`http://ec2-52-40-245-130.us-west-2.compute.amazonaws.com:9090/${pub.sary}`} alt={pub.sary} style={style}/>
               <h1 style={{marginLeft:'10%'}}  class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-xl xl:text-2xl 
             dark:text-white text-gray-900"> <ContentDisplay content={pub.titre} /></h1>
             <p style={{marginLeft:'10%'}} className="text-gray-700"> <ContentDisplay content={pub.resumer} /></p>
@@ -315,7 +315,7 @@ const Head = () => {
         publicites.map((pub) => (
           <div key={pub.id}>
             <Link  to={pub.lien} target="_blank" rel="noopener noreferrer">
-            <img src={`http://localhost:8080/${pub.sary}`} alt={pub.sary} style={style}/>
+            <img src={`http://ec2-52-40-245-130.us-west-2.compute.amazonaws.com:9090/${pub.sary}`} alt={pub.sary} style={style}/>
             </Link>
             <h1 style={{marginLeft:'10%'}}  class="max-w-2xl mb-4 text-4xl font-extrabold tracking-tight leading-none md:text-xl xl:text-2xl 
             dark:text-white text-gray-900"> <ContentDisplay content={pub.titre} /></h1>

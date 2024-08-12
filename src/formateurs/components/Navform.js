@@ -139,7 +139,7 @@ useEffect(() => {
                             <Menu.Button className="relative flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
                               <span className="absolute -inset-1.5" />
                               <span className="sr-only">Open user menu</span>
-                              <img className="h-8 w-8 rounded-full" src={`http://localhost:8080/${demandes.pdp}`} alt="" />
+                              <img className="h-8 w-8 rounded-full" src={`http://ec2-52-40-245-130.us-west-2.compute.amazonaws.com:9090/${demandes.pdp}`} alt="" />
                             </Menu.Button>
                           </div>
                           <Transition
