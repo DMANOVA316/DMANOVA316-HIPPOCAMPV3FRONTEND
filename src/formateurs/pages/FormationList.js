@@ -1,155 +1,171 @@
-'use client';
+"use client";
 
-import React from 'react';
+import React from "react";
 
-import { Table, Button, Tooltip  } from 'flowbite-react';
+import { Table, Button, Tooltip } from "flowbite-react";
 
+import { Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 
+import Navform from "../components/Navform";
+import Swal from "sweetalert2";
+import axios from "@/api/axios";
 
-import {Link} from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import Cookies from "js-cookie";
+import BarNav from "../components/BarNav";
 
-import Navform from '../components/Navform';
-import Swal from 'sweetalert2';
-import axios from '@/api/axios';
-
-import Cookies from 'js-cookie';
-import BarNav from '../components/BarNav';
+import AddForm from "./AddForm"
 
 
 
 const FormationList = () => {
-
-
-      
-
   function formatDate(dateString) {
-    const options = { year: 'numeric', month: 'long', day: 'numeric' };
-    return new Date(dateString).toLocaleDateString('fr-FR', options);
+    const options = { year: "numeric", month: "long", day: "numeric" };
+    return new Date(dateString).toLocaleDateString("fr-FR", options);
   }
-    const token = Cookies.get('token');
+  const token = Cookies.get("token");
 
-    const [demandes, setDemandes] = useState([]);
-    const [tailleDuTableau, setTailleDuTableau] = useState(0);
+  const [demandes, setDemandes] = useState([]);
+  const [tailleDuTableau, setTailleDuTableau] = useState(0);
 
+  useEffect(() => {
+    // Effectuer une requête HTTP pour récupérer les détails de l'utilisateur et les paramètres de l'utilisateur
+    axios
+      .get("/MesFormation?token=" + token)
+      .then((response) => {
+        setDemandes(response.data);
+        setTailleDuTableau(response.data.length);
+        console.log(response.data.length);
+        console.log(response.data[0].image);
+      })
+      .catch((error) => {
+        console.error(
+          "Erreur lors de la récupération des détails de l'utilisateur :",
+          error
+        );
+      });
+  }, []);
 
+  const handleSubmit = async (idFormation) => {
+    try {
+      const response = await axios.get(
+        "/demandevalidation?idFormation=" + idFormation
+      );
 
-    useEffect(() => {
-        // Effectuer une requête HTTP pour récupérer les détails de l'utilisateur et les paramètres de l'utilisateur
-        axios.get("/MesFormation?token="+token)
-          .then((response) => {
-            setDemandes(response.data);
-            setTailleDuTableau(response.data.length);
-            console.log(response.data.length);
-            console.log(response.data[0].image)
+      if (response.status === 200) {
+        Swal.fire({
+          icon: "success",
+          title: "Bravo",
+          text: "Votre demande a été prise en compte, l'administration vous contactera",
+          footer: '<a href=""></a>',
+        });
 
-          })
-          .catch((error) => {
-            console.error('Erreur lors de la récupération des détails de l\'utilisateur :', error);
-          });
-      }, []);
+        window.location.href = "/formationlist";
+      }
+    } catch (error) {
+      console.error(error);
+      if (error.response?.status === 400) {
+        Swal.fire({
+          icon: "error",
+          title: "Oops...",
+          text: "Veuillez activer votre compte ou créer un compte",
+          footer: '<a href=""></a>',
+        });
 
-      const handleSubmit = async (idFormation) => {
-   
-    
-        try {
-          const response = await axios.get("/demandevalidation?idFormation="+idFormation);
-        
-           if(response.status === 200) {
-            Swal.fire({
-              icon: 'success',
-              title: 'Bravo',
-              text: 'Votre demande a été prise en compte, l\'administration vous contactera',
-              footer: '<a href=""></a>'
-            });
+        //navigate("/formationlist")
+        window.location.href = "/formationlist";
+      }
+    }
+  };
 
-            window.location.href="/formationlist";
-    
-    };
-    
-        }catch (error) {
-            console.error(error);
-            if(error.response?.status === 400) {
-              Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Veuillez activer votre compte ou créer un compte',
-                footer: '<a href=""></a>'
-              });
-    
-              //navigate("/formationlist")
-        window.location.href="/formationlist";
+  return (
+    <>
+      <Navform />
+      <BarNav />
 
-        };
-      
-          }
-    
-      };
-
-      
-
-    return (
-
-      <>
-      <Navform/>
-      <BarNav/>
-
-      <br/>
-      <br/>
-      <br/>
-
-      
+      <br />
+      {/* <br /> */}
+      {/* <br /> */}
+      <AddForm />
       <div className="flex items-center justify-start h-full mb-6">
-      <div className="bg-white rounded-lg shadow-lg p-6 flex items-center space-x-4">
-        <div className="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="h-6 w-6 text-white"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M12 6v6m0 0v6m0-6h6m-6 0H6"
-            />
-          </svg>
-        </div>
-        <div>
-          <h1 className="text-xl font-bold">Nombre total</h1>
-          <p className="text-gray-600 font-bold">{tailleDuTableau}</p>
+        <div className=" flex items-center space-x-4">
+          {/* <div className="bg-blue-500 w-12 h-12 rounded-full flex items-center justify-center">
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              className="h-6 w-6 text-white"
+              fill="none"
+              viewBox="0 0 24 24"
+              stroke="currentColor"
+            >
+              <path
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth={2}
+                d="M12 6v6m0 0v6m0-6h6m-6 0H6"
+              />
+            </svg>
+          </div> */}
+          <div className="divNombTot">
+            <h1 className="text-xl font-bold">Nombre total :</h1>
+            <p className="text-gray-600 font-bold">{tailleDuTableau}</p>
+          </div>
         </div>
       </div>
-    </div>
 
-
-    <div className="relative overflow-x-auto shadow-md sm:rounded-lg"  style={{ width:'100%',display:'flex',justifyContent: 'flex-end' }}>
-
-<table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-              <thead className="text-xs text-white uppercase bg-blue-700 dark:bg-gray-700 dark:text-gray-400">
-                  <tr>
-                      <th scope="col" className="px-4 py-3">Date validation</th>
-                      <th scope="col" className="px-4 py-3">Nombre d'Apprenant</th>
-                      <th scope="col" className="px-4 py-3">Catégorie</th>
-                      <th scope="col" className="px-4 py-3">Titre</th>
-                      <th scope="col" className="px-4 py-3">Type Acces</th>
-                      <th scope="col" className="px-4 py-3">Prix</th>
-                      <th scope="col" className="px-4 py-3">Actions</th>
-
-                  </tr>
-              </thead>
-              <tbody>
-              {demandes.map(demande => (
-                  <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
-                      <td className="px-4 py-3">{formatDate(demande.devalidation)}</td>
-                      <td className="px-4 py-3">{demande.totalEleve}</td>
-                      <td className="px-4 py-3">{demande.nomCategorie}</td>
-                      <td className="px-4 py-3">{demande.titre}</td>
-                      <td className="px-4 py-3">{demande.nomTypesAcces}</td>
-                      <td className="px-4 py-3">{demande.prix.toLocaleString('fr-FR')} Ar</td>
-                      <td className="px-4 py-3">{demande.etat === 1 && (
+      <div
+        className="relative overflow-x-auto shadow-md sm:rounded-lg"
+        style={{ width: "100%", display: "flex", justifyContent: "flex-end" }}
+      >
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-white uppercase bg-blue-700 dark:bg-gray-700 dark:text-gray-400">
+            <tr
+              style={{
+                background: "#fff",
+                color: "#6b7280",
+                border: "2px solid #f5f5f5",
+              }}
+            >
+              <th scope="col" className="px-4 py-3">
+                Date validation
+              </th>
+              <th scope="col" className="px-4 py-3">
+                Nombre d'Apprenant
+              </th>
+              <th scope="col" className="px-4 py-3">
+                Catégorie
+              </th>
+              <th scope="col" className="px-4 py-3">
+                Titre
+              </th>
+              <th scope="col" className="px-4 py-3">
+                Type Acces
+              </th>
+              <th scope="col" className="px-4 py-3">
+                Prix
+              </th>
+              <th scope="col" className="px-4 py-3">
+                Actions
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            {demandes.map((demande) => (
+              <tr className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-50 dark:hover:bg-gray-600">
+                <td className="px-4 py-3">
+                  {formatDate(demande.devalidation)}
+                </td>
+                <td className="px-4 py-3">{demande.totalEleve}</td>
+                <td className="px-4 py-3">{demande.nomCategorie}</td>
+                <td className="px-4 py-3">{demande.titre}</td>
+                <td className="px-4 py-3">{demande.nomTypesAcces}</td>
+                <td className="px-4 py-3">
+                  {demande.prix.toLocaleString("fr-FR")} Ar
+                </td>
+                <td
+                  className="px-4 py-3"
+                  style={{ display: "flex", gap: "10px", marginTop: "-10px" }}
+                >
+                  {demande.etat === 1 && (
                     <>
                       <Link
                         className="font-medium text-cyan-600 hover:underline dark:text-cyan-500 mt-4"
@@ -181,7 +197,7 @@ const FormationList = () => {
                       </span>
                     </>
                   )}
-                
+
                   {demande.etat === 2 && (
                     <>
                       <Link
@@ -214,20 +230,31 @@ const FormationList = () => {
                       </span>
                     </>
                   )}
-                
+
                   {demande.etat === 0 && (
                     <>
-
-                    <Tooltip content="details">
-                      <Link className="ml-2 font-medium text-cyan-600 hover:underline dark:text-cyan-500"
-                        to={`/detailform?idFormation=${demande.idFormation}`}>
-                        <button className="text-blue-800 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-xs px-2 py-0.5 text-center mt-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
-                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z" />
+                      <Tooltip content="details">
+                        <Link
+                          className="ml-2 font-medium text-cyan-600 hover:underline dark:text-cyan-500"
+                          to={`/detailform?idFormation=${demande.idFormation}`}
+                        >
+                          <button className="text-blue-800 hover:text-white border border-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-bold rounded-lg text-xs px-2 py-0.5 text-center mt-3 dark:border-blue-500 dark:text-blue-500 dark:hover:text-white dark:hover:bg-blue-500 dark:focus:ring-blue-800">
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              stroke-width="1.5"
+                              stroke="currentColor"
+                              class="w-6 h-6"
+                            >
+                              <path
+                                stroke-linecap="round"
+                                stroke-linejoin="round"
+                                d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m5.231 13.481L15 17.25m-4.5-15H5.625c-.621 0-1.125.504-1.125 1.125v16.5c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9zm3.75 11.625a2.625 2.625 0 11-5.25 0 2.625 2.625 0 015.25 0z"
+                              />
                             </svg>
-                        </button>
-                      </Link>
-
+                          </button>
+                        </Link>
                       </Tooltip>
 
                       <button
@@ -241,19 +268,15 @@ const FormationList = () => {
                         </span>
                       </button>
                     </>
-                  )}</td>
- 
-                  </tr>
-              ))}
-
-              </tbody>
-          </table>
- 
-</div>
- 
-       
-            </>
-    );
+                  )}
+                </td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+    </>
+  );
 };
 
 export default FormationList;
