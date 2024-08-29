@@ -352,7 +352,12 @@ const NewFormation = () => {
       <form onSubmit={handleSubmit} className="space-y-6">
         <div
           classNameName="div-cert-pers"
-          style={{ display: "flex", padding: "20px", backgroundColor: "#fff" , marginTop: '25px'}}
+          style={{
+            display: "flex",
+            padding: "20px",
+            backgroundColor: "#fff",
+            marginTop: "25px",
+          }}
         >
           <div>
             <h2 className="h2-per">Personnalisation</h2>
@@ -378,7 +383,11 @@ const NewFormation = () => {
               <span>Personnaliser l'url</span>
             </div>
             <div className="div-inp-cert">
-              <input type="text" placeholder="Veiller remplir..." style={{width:'100%'}}/>
+              <input
+                type="text"
+                placeholder="Veiller remplir..."
+                style={{ width: "100%" }}
+              />
             </div>
 
             <div className="div-spn-nam">
@@ -499,7 +508,7 @@ const NewFormation = () => {
             <div className="appercu-page"></div>
           </div>
         </div>
-        <div>
+        <div style={{ padding: "15px", background: "#fff", fontWeight: "700" }}>
           <Link
             target="_blank"
             rel="noopener noreferrer"
