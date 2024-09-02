@@ -11,26 +11,29 @@ import logo from "@/images/logo-hippocamp.png";
 import wave from "@/images/svg/wave.svg";
 import userIcon from "@/images/svg/user.svg";
 import homeIcon from "@/images/svg/home-light.svg";
+
 // const styles = {
 //   borderRadius: "20px",
 //   width: "100%",
 //   height: "65%",
 //   marginTop: "-1%",
 // };
+
 const styles = {
   backgroundImage: `url('https://s3-alpha-sig.figma.com/img/c297/5ed9/feedde7751b41eae50bbf1887e4955a4?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bsKWE4kSPALCsL-IuPuU2ZQc9FcP4eKWRQwiYu61K42enIsDNTQs~biQn6-jLdHib36EK15WdKlKV7PpPBDzOd1arIGUCTOZ5jf1cDerhvhvLwJo5f9XRpPBiz5jmwjjJt-mK2J9bWzoT7t~qsQ7qD0qn3uQtfcnOOlAGGMRcFYiF53DMCrbmcaLMWLALud-lhLZNx3MBWtpcOCTPeuai5G~YAtwVDfCU3~TTtTuLVEJ-N~ZxWLfoQ2bisL~cQTTOSffplSOT7INlsMlRxaeitux7k7KKAEjyD8sZ~xtQvJiHIrIU-1dClsU4vLgFJEkSPZou7DWCezVkkXG2lLLFg__')`,
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
-
   borderRadius: "20px",
   // width: '80%',
   height: "100%",
   // marginTop: "-10%",
 };
+
 const styleTitle = {
   fontFamily: "Kalnia",
 };
+
 function SignUp() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -324,7 +327,6 @@ function SignUp() {
                   )}
                 </div>
 
-
                 <div class="flex items-start">
                   <div class="flex items-center h-5">
                     <input
@@ -357,21 +359,21 @@ function SignUp() {
                 </div>
               </div>
               <button
-                  type="submit"
-                  class="w-full px-5 py-2.5 text-sm font-medium text-center text-white bg-cyan-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+                type="submit"
+                class="w-full px-5 py-2.5 text-sm font-medium text-center text-white bg-cyan-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800"
+              >
+                {" "}
+                S'inscrire
+              </button>
+              <p class="text-sm font-light text-gray-500 dark:text-gray-400">
+                Vous avez déjà un compte ?{" "}
+                <Link
+                  to="/signin"
+                  class="font-medium text-cyan-600 hover:underline dark:text-primary-500"
                 >
-                  {" "}
-                  S'inscrire
-                </button>
-                <p class="text-sm font-light text-gray-500 dark:text-gray-400">
-                  Vous avez déjà un compte ?{" "}
-                  <Link
-                    to="/signin"
-                    class="font-medium text-cyan-600 hover:underline dark:text-primary-500"
-                  >
-                    Se connecter ici
-                  </Link>
-                </p>
+                  Se connecter ici
+                </Link>
+              </p>
             </form>
             <div class="flex flex-col items-center">
               <p className="text-grayRaven">
@@ -384,8 +386,6 @@ function SignUp() {
                 S'inscrire
               </a>
             </div>
-
-          
           </div>
         </div>
       </div>
