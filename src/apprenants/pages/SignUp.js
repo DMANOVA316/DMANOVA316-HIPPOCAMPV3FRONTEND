@@ -237,7 +237,7 @@ function SignUp() {
             href="/"
             className="flex gap-[8px] items-center text-primary font-normal cursor hover:text-grayRaven"
           >
-            <img src="{homeIcon}" alt="" className="" />
+            <img src={homeIcon} alt="" className="" />
             <span className="font-normal">Retour à la page d'accueil</span>
           </a>
         </div>
