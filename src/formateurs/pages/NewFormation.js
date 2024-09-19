@@ -157,9 +157,15 @@ const NewFormation = () => {
       <Navform />
       <BarNav />
 
+      <div className="flex items-center mt-12 mb-8 gap-4 w-full">
+        <div className="divNombTot">
+          <h1 className="text-xl font-bold">Ajouter une nouvelle formation</h1>
+        </div>
+      </div>
 
-      <main className="p-2 md:ml-34 h-auto pt-10">
-        <section className="bg-gray-50 dark:bg-gray-900 p-3 sm:p-5">
+
+      <main className="h-auto pt-4">
+        <section className="bg-gray-50 dark:bg-gray-900 p-3">
 
 
 

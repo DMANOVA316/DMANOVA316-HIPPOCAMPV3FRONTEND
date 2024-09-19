@@ -14,6 +14,7 @@ import Logo2 from "@/images/Logo2.png";
  
 
 const navigation = [
+  { name: 'Accueil', href: '/' },
     { name: 'Nos services', href: '/listeFormationacceuil' },
     { name: 'Trouver une formation', href: '/listeFormationacceuil'},
     // { name: 'Progression', href: '#'},

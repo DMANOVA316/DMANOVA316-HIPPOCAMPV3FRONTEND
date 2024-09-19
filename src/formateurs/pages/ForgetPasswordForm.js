@@ -3,7 +3,7 @@ import { useState } from 'react';
 import Swal from 'sweetalert2';
 
 import axios from '@/api/axios';
-import images from "@/images/hIPPOCAMP1.png";
+import images from "@/images/logo-hippocamp.png";
 
 
 export default function ForgetPasswordForm() {
@@ -52,10 +52,10 @@ export default function ForgetPasswordForm() {
 
 
   return (
-    <section class="bg-gray-50 dark:bg-gray-900">
+    <section class="">
     <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
-        <a href="#" class="flex items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
-        <img class="w-8 h-8 mr-2" src={images} alt="logo"/>
+        <a href="#" class="flex flex-col items-center mb-6 text-2xl font-semibold text-gray-900 dark:text-white">
+        <img class="w-auto h-16 mr-2" src={images} alt="logo"/>
         Hippocamp   
         </a>
         <div class="w-full p-6 bg-white rounded-lg shadow dark:border md:mt-0 sm:max-w-md dark:bg-gray-800 dark:border-gray-700 sm:p-8">

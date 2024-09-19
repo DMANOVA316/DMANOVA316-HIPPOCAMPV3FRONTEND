@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 
 import NavbarAccuiel from "@/apprenants/components/NavbarAccuiel";
 import NavBarPrincipale from "@/apprenants/components/NavBarPrincipale";
-import images from "@/images/login.jpg";
+// import images from "@/images/login.jpg";
 import NavbarAccuielSite from "@/apprenants/components/NavbarAccuielSite";
 import NavBarPrincipaleSite from "@/apprenants/components/NavBarPrincipaleSite";
 
@@ -18,6 +18,7 @@ import logo from "@/images/logo-hippocamp.png";
 import wave from "@/images/svg/wave.svg";
 import userIcon from "@/images/svg/user.svg";
 import homeIcon from "@/images/svg/home-light.svg";
+import images from "@/images/svg/login-bg.svg";
 
 // const styles = {
 //   borderRadius: '20px',
@@ -33,7 +34,7 @@ import homeIcon from "@/images/svg/home-light.svg";
 //    marginTop:'10%'
 // };
 const styles = {
-  backgroundImage: `url('https://s3-alpha-sig.figma.com/img/c297/5ed9/feedde7751b41eae50bbf1887e4955a4?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bsKWE4kSPALCsL-IuPuU2ZQc9FcP4eKWRQwiYu61K42enIsDNTQs~biQn6-jLdHib36EK15WdKlKV7PpPBDzOd1arIGUCTOZ5jf1cDerhvhvLwJo5f9XRpPBiz5jmwjjJt-mK2J9bWzoT7t~qsQ7qD0qn3uQtfcnOOlAGGMRcFYiF53DMCrbmcaLMWLALud-lhLZNx3MBWtpcOCTPeuai5G~YAtwVDfCU3~TTtTuLVEJ-N~ZxWLfoQ2bisL~cQTTOSffplSOT7INlsMlRxaeitux7k7KKAEjyD8sZ~xtQvJiHIrIU-1dClsU4vLgFJEkSPZou7DWCezVkkXG2lLLFg__')`,
+  backgroundImage: `url(${images})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",
@@ -238,7 +239,7 @@ const SignIn = () => {
             href="/"
             className="flex gap-[8px] items-center text-primary font-normal cursor hover:text-grayRaven"
           >
-            <img src="{homeIcon}" alt="" className="" />
+            <img src={homeIcon} alt="" className="" />
             <span className="font-normal">Retour à la page d'accueil</span>
           </a>
         </div>

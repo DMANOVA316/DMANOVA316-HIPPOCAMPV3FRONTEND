@@ -360,7 +360,7 @@ const NewFormation = () => {
           }}
         >
           <div>
-            <h2 className="h2-per">Personnalisation</h2>
+            <h2 className="h2-per">Personnalisation de page</h2>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor,
               cumque.

@@ -4,9 +4,9 @@ import { Link } from "react-router-dom";
 import NavbarAccuiel from "@/apprenants/components/NavbarAccuiel";
 import NavBarPrincipale from "@/apprenants/components/NavBarPrincipale";
 
-import images from "@/images/inscri.jpg";
+// import images from "@/images/inscri.jpg";
 
-// import images from "@/images/svg/login-bg.svg";
+import images from "@/images/svg/login-bg.svg";
 import logo from "@/images/logo-hippocamp.png";
 import wave from "@/images/svg/wave.svg";
 import userIcon from "@/images/svg/user.svg";
@@ -20,7 +20,7 @@ import homeIcon from "@/images/svg/home-light.svg";
 // };
 
 const styles = {
-  backgroundImage: `url('https://s3-alpha-sig.figma.com/img/c297/5ed9/feedde7751b41eae50bbf1887e4955a4?Expires=1725840000&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=bsKWE4kSPALCsL-IuPuU2ZQc9FcP4eKWRQwiYu61K42enIsDNTQs~biQn6-jLdHib36EK15WdKlKV7PpPBDzOd1arIGUCTOZ5jf1cDerhvhvLwJo5f9XRpPBiz5jmwjjJt-mK2J9bWzoT7t~qsQ7qD0qn3uQtfcnOOlAGGMRcFYiF53DMCrbmcaLMWLALud-lhLZNx3MBWtpcOCTPeuai5G~YAtwVDfCU3~TTtTuLVEJ-N~ZxWLfoQ2bisL~cQTTOSffplSOT7INlsMlRxaeitux7k7KKAEjyD8sZ~xtQvJiHIrIU-1dClsU4vLgFJEkSPZou7DWCezVkkXG2lLLFg__')`,
+  backgroundImage: `url(${images})`,
   backgroundSize: "cover",
   backgroundPosition: "center",
   backgroundRepeat: "no-repeat",

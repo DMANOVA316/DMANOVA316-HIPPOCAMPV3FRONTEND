@@ -210,7 +210,7 @@ const CertificateViewer = () => {
       <form onSubmit={handleSubmit}>
         <div className="div-cert-pers">
           <div>
-            <h2 className="h2-per">Personnalisation</h2>
+            <h2 className="h2-per">Paramètre certificat</h2>
             <p>
               Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolor,
               cumque.
@@ -233,7 +233,7 @@ const CertificateViewer = () => {
               <Label
                 className="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
                 htmlFor="phrase"
-                value="phrase"
+                value="Phrase"
               />
             </div>
             <div className="div-inp-cert">
