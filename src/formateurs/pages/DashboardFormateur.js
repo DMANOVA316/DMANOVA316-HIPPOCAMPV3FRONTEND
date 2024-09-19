@@ -9,7 +9,7 @@ import { Outlet, Link} from 'react-router-dom';
 const DashboardFormateur = () => {
     return (
         <>
-        <div className="antialiased bg-gray-50 dark:bg-gray-900">
+        <div className="antialiased bg-gray-50 dark:bg-gray-900 h-screen overflow-auto">
             <main className="p-4 md:ml-64 h-auto pt-10">
                 <Outlet/>
             </main>
