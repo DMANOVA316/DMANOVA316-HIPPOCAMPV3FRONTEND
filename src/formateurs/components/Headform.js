@@ -6,7 +6,7 @@ import Navform from './Navform';
 
 const Headform = () => {
     return (
-      <div className="antialiased bg-gray-50 dark:bg-gray-900">
+      <div className="antialiased bg-gray-50 dark:bg-gray-900 h-screen overflow-auto">
             <Navform/>
             <Asideform/> 
           
