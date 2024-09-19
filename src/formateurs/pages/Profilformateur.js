@@ -96,7 +96,9 @@ const Profilformateur = () => {
       return { __html: content };
     };
 
-    return <div dangerouslySetInnerHTML={createMarkup()} />;
+    return <p style={{
+      fontStyle: "normal"
+    }} dangerouslySetInnerHTML={createMarkup()} />;
   };
 
   const [demande, setDemande] = useState([]);
@@ -235,7 +237,6 @@ const Profilformateur = () => {
                 fontWeight: "700",
                 marginTop: "10px",
                 color: "#020F13",
-                fontFamily: "Montserrat",
                 fontSize: "24px",
               }}
             >
@@ -247,7 +248,6 @@ const Profilformateur = () => {
                 marginTop: "5px",
                 color: "#6C757D",
                 fontSize: "14px",
-                fontFamily: "Montserrat",
               }}
             >
               <ContentDisplay content={demandes.numero} />
@@ -402,7 +402,7 @@ const Profilformateur = () => {
                               {Array.from({ length: 5 }).map((_, index) => (
                                 <span key={index}>
                                   {parseFloat(moyennes[demande.idFormation]) >=
-                                  index + 1 ? ( // Utiliser Math.floor pour arrondir la moyenne à l'entier inférieur
+                                    index + 1 ? ( // Utiliser Math.floor pour arrondir la moyenne à l'entier inférieur
                                     <FontAwesomeIcon
                                       icon={solidStar}
                                       style={{ color: "gold" }}
@@ -500,11 +500,10 @@ const Profilformateur = () => {
                 <button
                   key={page}
                   onClick={() => paginate(page)}
-                  className={`mx-2 px-3 py-2 rounded-full ${
-                    page === currentPage
+                  className={`mx-2 px-3 py-2 rounded-full ${page === currentPage
                       ? "bg-blue-500 text-white"
                       : "bg-gray-200 text-gray-700"
-                  }`}
+                    }`}
                 >
                   {page}
                 </button>
@@ -647,11 +646,10 @@ const Profilformateur = () => {
                 style={{ width: "300px" }}
               >
                 <Link
-                  to={`/listcoursapprenant?idFormation=${
-                    demande.idFormation
-                  }&titre=${encodeURIComponent(
-                    demande.titre.replace(/ /g, "_")
-                  )}`}
+                  to={`/listcoursapprenant?idFormation=${demande.idFormation
+                    }&titre=${encodeURIComponent(
+                      demande.titre.replace(/ /g, "_")
+                    )}`}
                 >
                   <div className="bg-white shadow-lg rounded-lg transition duration-300 hover:scale-105">
                     <img
@@ -680,7 +678,7 @@ const Profilformateur = () => {
                               {Array.from({ length: 5 }).map((_, index) => (
                                 <span key={index}>
                                   {parseFloat(moyennes[demande.idFormation]) >=
-                                  index + 1 ? ( // Utiliser Math.floor pour arrondir la moyenne à l'entier inférieur
+                                    index + 1 ? ( // Utiliser Math.floor pour arrondir la moyenne à l'entier inférieur
                                     <FontAwesomeIcon
                                       icon={solidStar}
                                       style={{ color: "gold" }}
@@ -778,11 +776,10 @@ const Profilformateur = () => {
                 <button
                   key={page}
                   onClick={() => paginate(page)}
-                  className={`mx-2 px-3 py-2 rounded-full ${
-                    page === currentPage
+                  className={`mx-2 px-3 py-2 rounded-full ${page === currentPage
                       ? "bg-blue-500 text-white"
                       : "bg-gray-200 text-gray-700"
-                  }`}
+                    }`}
                 >
                   {page}
                 </button>
@@ -914,11 +911,10 @@ const Profilformateur = () => {
                 style={{ width: "300px" }}
               >
                 <Link
-                  to={`/detailFormationaccueil?idFormation=${
-                    demande.idFormation
-                  }&titre=${encodeURIComponent(
-                    demande.titre.replace(/ /g, "_")
-                  )}`}
+                  to={`/detailFormationaccueil?idFormation=${demande.idFormation
+                    }&titre=${encodeURIComponent(
+                      demande.titre.replace(/ /g, "_")
+                    )}`}
                 >
                   <div className="bg-white shadow-lg rounded-lg transition duration-300 hover:scale-105">
                     <img
@@ -947,7 +943,7 @@ const Profilformateur = () => {
                               {Array.from({ length: 5 }).map((_, index) => (
                                 <span key={index}>
                                   {parseFloat(moyennes[demande.idFormation]) >=
-                                  index + 1 ? ( // Utiliser Math.floor pour arrondir la moyenne à l'entier inférieur
+                                    index + 1 ? ( // Utiliser Math.floor pour arrondir la moyenne à l'entier inférieur
                                     <FontAwesomeIcon
                                       icon={solidStar}
                                       style={{ color: "gold" }}
@@ -1045,11 +1041,10 @@ const Profilformateur = () => {
                 <button
                   key={page}
                   onClick={() => paginate(page)}
-                  className={`mx-2 px-3 py-2 rounded-full ${
-                    page === currentPage
+                  className={`mx-2 px-3 py-2 rounded-full ${page === currentPage
                       ? "bg-blue-500 text-white"
                       : "bg-gray-200 text-gray-700"
-                  }`}
+                    }`}
                 >
                   {page}
                 </button>

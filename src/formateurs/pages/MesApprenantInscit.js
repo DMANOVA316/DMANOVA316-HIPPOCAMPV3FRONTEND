@@ -82,7 +82,7 @@ const [demandes, setDemandes] = useState([]);
                                 <td className="px-4 py-3">{demande.numero}</td>
                                 <td className="px-4 py-3">{demande.progression} %</td>
                                 <Link to={`/MessageApprenant?idFormateur=${Formateur.idFormateur}&idApprenant=${demande.idApprenant}&tokenApprenant=${demande.token}`}
-                         className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300 mt-4" ><td className="px-4 py-3"
+                         className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300 my-4 ml-4" ><td className="px-4 py-3"
 
                         >Envoyer message</td></Link>
                             </tr>

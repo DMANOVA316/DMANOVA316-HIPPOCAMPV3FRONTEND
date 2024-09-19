@@ -73,7 +73,7 @@ const ApprenantList = () => {
                                 <td className="px-4 py-3">{formatDate(demande.dateDebutExamen)}</td>
  
                                 <Link to={`/Resultat?idFormation=${idFormation}&idExamen=${demande.idExamen}`}
-                         className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300 mt-4" ><td className="px-4 py-3"
+                         className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300 my-4 ml-4" ><td className="px-4 py-3"
 
                         >Resultat</td></Link>
                             </tr>

@@ -123,7 +123,7 @@ const FormationList = () => {
                       className="font-medium text-cyan-600 hover:underline dark:text-cyan-500 mt-4"
                       to={`/MesApprenantInscit?idFormation=${demande.idFormation}`}
                     >
-                      <span className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300 mt-4">
+                      <span className="inline-flex items-center bg-blue-100 text-blue-800 text-xs font-medium px-2.5 py-0.5 rounded-full dark:bg-blue-900 dark:text-blue-300 my-4 ml-4">
                         <span className="w-2 h-2 me-1 bg-blue-500 rounded-full"></span>
                         Voir les apprenant
                       </span>

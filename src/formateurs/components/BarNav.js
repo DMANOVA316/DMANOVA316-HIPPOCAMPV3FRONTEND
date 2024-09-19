@@ -77,7 +77,6 @@ const BarNav = () => {
                   className="ml-3 text-gray-500 transition duration-75 
       dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   style={{
-                    fontFamily: "Montserrat",
                     fontSize: "14px",
                     fontWeight: 500,
                     lineHeight: "17.07px",
@@ -115,7 +114,6 @@ dark:text-gray-400 group-hover:text-gray-100 dark:group-hover:text-white"
                   className="ml-3 text-gray-500 transition duration-75 dark:text-gray-400 
       group-hover:text-gray-900 dark:group-hover:text-white"
                   style={{
-                    fontFamily: "Montserrat",
                     fontSize: "14px",
                     fontWeight: 500,
                     lineHeight: "17.07px",
@@ -153,7 +151,6 @@ dark:text-gray-400 group-hover:text-gray-100 dark:group-hover:text-white"
                   className="ml-3 text-gray-500 transition duration-75 dark:text-gray-400 
       group-hover:text-gray-900 dark:group-hover:text-white"
                   style={{
-                    fontFamily: "Montserrat",
                     fontSize: "14px",
                     fontWeight: 500,
                     lineHeight: "17.07px",
@@ -194,7 +191,6 @@ dark:text-gray-400 group-hover:text-gray-100 dark:group-hover:text-white"
                 <span
                   className="ml-3 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   style={{
-                    fontFamily: "Montserrat",
                     fontSize: "14px",
                     fontWeight: 500,
                     lineHeight: "17.07px",
@@ -235,7 +231,6 @@ dark:text-gray-400 group-hover:text-gray-100 dark:group-hover:text-white"
                 <span
                   className="ml-3 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   style={{
-                    fontFamily: "Montserrat",
                     fontSize: "14px",
                     fontWeight: 500,
                     lineHeight: "17.07px",
@@ -277,7 +272,6 @@ dark:text-gray-400 group-hover:text-gray-100 dark:group-hover:text-white"
                 <span
                   className="ml-3 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   style={{
-                    fontFamily: "Montserrat",
                     fontSize: "14px",
                     fontWeight: 500,
                     lineHeight: "17.07px",
@@ -330,7 +324,6 @@ transition duration-75 dark:text-gray-400 group-hover:text-gray-100 dark:group-h
                 <span
                   className="ml-3 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   style={{
-                    fontFamily: "Montserrat",
                     fontSize: "14px",
                     fontWeight: 500,
                     lineHeight: "17.07px",
@@ -369,7 +362,6 @@ transition duration-75 dark:text-gray-400 group-hover:text-gray-100 dark:group-h
                 <span
                   className="ml-3 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   style={{
-                    fontFamily: "Montserrat",
                     fontSize: "14px",
                     fontWeight: 500,
                     lineHeight: "17.07px",
@@ -404,7 +396,6 @@ transition duration-75 dark:text-gray-400 group-hover:text-gray-100 dark:group-h
                 <span
                   className="ml-3 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   style={{
-                    fontFamily: "Montserrat",
                     fontSize: "14px",
                     fontWeight: 500,
                     lineHeight: "17.07px",
@@ -449,7 +440,6 @@ transition duration-75 dark:text-gray-400 group-hover:text-gray-100 dark:group-h
                 <span
                   className="ml-3 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white"
                   style={{
-                    fontFamily: "Montserrat",
                     fontSize: "14px",
                     fontWeight: 500,
                     lineHeight: "17.07px",
